@@ -1,0 +1,39 @@
+name: gotherepy_doctor
+version: 1.0.0+1
+publish_to: none
+description: A new Flutter project.
+environment: 
+  sdk: '>=2.19.2 <3.0.0'
+
+dependencies: 
+  cupertino_icons: ^1.0.2
+  get: 4.6.5
+  google_fonts:
+  country_picker:
+  loader_overlay:
+  pin_code_fields: 7.4.0
+  image_picker: 0.8.7+4
+  banner_carousel: 1.2.1
+
+  flutter: 
+    sdk: flutter
+
+dev_dependencies: 
+  flutter_lints: ^2.0.0
+  flutter_test: 
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/
+    - assets/splash_and_intro_screen_images/
+    - assets/splash_and_intro_screen_images/plant.png
+    - assets/auth_images/
+    - assets/drawer_icons/
+    - assets/counseling/Individual_counseling/
+    - assets/home_screen_images/activities_images/
+    - assets/home_screen_images/appBar_popupMenu_icons/
+    - assets/meditation_images/
+    - assets/meditation_images/feelings_moods_images/
+    - assets/miscellaneous_images/
