@@ -11,9 +11,11 @@ dependencies:
   google_fonts:
   country_picker:
   loader_overlay:
+  flutter_spinkit: ^5.2.0
   pin_code_fields: 7.4.0
   image_picker: 0.8.7+4
   banner_carousel: 1.2.1
+  get_storage:
 
   flutter: 
     sdk: flutter

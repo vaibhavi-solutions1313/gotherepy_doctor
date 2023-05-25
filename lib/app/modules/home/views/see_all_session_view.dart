@@ -119,7 +119,6 @@ class SeeAllSessionView extends GetView {
                             ),
                             SizedBox(height: 10,),
                             CustomSolidButton(buttonText: 'Cancel', onClick: (){},fontSize: 16,)
-
                           ],
                         ),
                       )

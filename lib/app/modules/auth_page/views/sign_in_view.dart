@@ -89,7 +89,7 @@ class SignInView extends GetView {
                             buttonText: 'Sign In',
                             onClick: () {
                               if (authPageController.signInFormKey.currentState!.validate()) {
-                                Get.to(() => HomeView());
+                                authPageController.signInUser(context, authPageController.emailController.text, authPageController.passwordController.text);
                               }
                             }),
                         SizedBox(

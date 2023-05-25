@@ -71,7 +71,8 @@ class SignUpView extends GetView {
                                 if(GetUtils.isEmail(authPageController.signUpEmailController.text)){
                                   if(authPageController.signUpFormKey.currentState!.validate()){
                                     if(authPageController.signUpPasswordController.text==authPageController.confirmPasswordController.text){
-                                      Get.to(()=>VerificationPageView(newUser: true,));
+                                      authPageController.signUpNewUser(context);
+
                                     }else {
                                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Password mismatched')));
                                     }
