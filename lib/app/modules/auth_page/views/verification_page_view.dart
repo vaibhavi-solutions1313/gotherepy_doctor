@@ -65,12 +65,15 @@ class VerificationPageView extends GetView {
                       ],
                     ),
                     PhoneTextField(title: 'text', phoneController: authPageController.phoneController, hint: 'klkj',),
-                    CustomSolidButton(buttonText: 'Send OTP', onClick: (){
+                    Obx(() => CustomSolidButton(buttonText: authPageController.canResendOtp.value?'Send OTP':'Resend otp in ${authPageController.timer.value} sec',
+                        boxColor: authPageController.canResendOtp.value?AppColors.tealColor:AppColors.greyColor676464.withOpacity(0.5),
+                        onClick: (){
                       if(authPageController.phoneController.text.isNotEmpty){
                         authPageController.sendOtp(context,authPageController.phoneController.text);
                       }
                       authPageController.showResetPasswordField.value=true;
                     }),
+                    ),
                     SizedBox(height: 30,),
                     Row(
                       children: [

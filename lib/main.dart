@@ -1,16 +1,21 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:loader_overlay/loader_overlay.dart';
-
 import 'app/app_constants/constants_appColors.dart';
+import 'app/app_services/notification_services.dart';
 import 'app/routes/app_pages.dart';
 
-void main() {
+final localStorage = GetStorage();
+void main()async {
   WidgetsFlutterBinding.ensureInitialized();
   // await Firebase.initializeApp();
+  // NotificationServices notificationServices = NotificationServices();
+  await GetStorage.init();
+
   runApp(
     GlobalLoaderOverlay(
       useDefaultLoading: false,
@@ -26,14 +31,13 @@ void main() {
         title: "Application",
         theme: ThemeData(
           useMaterial3: true,
-
           primaryColor:  AppColors.blackishTextColor,
           fontFamily: GoogleFonts.roboto(color: Colors.red).fontFamily,
           primaryTextTheme: GoogleFonts.robotoTextTheme(),
-          appBarTheme: AppBarTheme(
+          appBarTheme: const AppBarTheme(
             color: AppColors.tealColor,
           ),
-          iconTheme: IconThemeData(
+          iconTheme: const IconThemeData(
               color: Colors.white
           ),
         ),
@@ -43,3 +47,6 @@ void main() {
     ),
   );
 }
+
+
+

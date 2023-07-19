@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:get/get.dart';
+import 'package:gotherepy_doctor/app/app_services/local_storage.dart';
 import 'package:http/http.dart'as http;
 
 import '../../../app_constants/constants_end_points.dart';
@@ -9,48 +10,58 @@ class AuthProviderProvider extends GetConnect {
   void onInit() {
     httpClient.baseUrl = 'YOUR-API-URL';
   }
-  Future loginUser() async {
+  Future<http.StreamedResponse> loginUser({required String email, required String password, required String deviceToken}) async {
     var headers = {
       'Content-Type': 'application/json'
     };
     var request = http.Request('POST', Uri.parse(EndPoints.baseUrl+EndPoints().login));
     request.body = json.encode({
-      "email": "doctor@g.com",
-      "password": "12345678"
+      "email": email,
+      "password": password
     });
     request.headers.addAll(headers);
-
     http.StreamedResponse response = await request.send();
-    if (response.statusCode == 200) {
-      print(await response.stream.bytesToString());
-    }
-    else {
-    print(response.reasonPhrase);
-    }
+ return response;
 
   }
-  Future registerUser(Map data) async {
+  Future<http.StreamedResponse> registerUser(Map data) async {
     var headers = {
       'Content-Type': 'application/json'
     };
     var request = http.Request('POST', Uri.parse(EndPoints.baseUrl+EndPoints().register));
     request.body = json.encode({
-      "email": "doctor@g.com",
-      "phone": "1234567890",
-      "password": "12345678",
-      "confirm_password": "12345678",
-      "doctor_type": "abc"
+      "email": data['email'],
+      "phone": data['phone'],
+      "password": data['password'],
+      "confirm_password": data['confirm_password'],
+      "doctor_type": data['doctor_type']
     });
     request.headers.addAll(headers);
 
     http.StreamedResponse response = await request.send();
+    return response;
 
-    if (response.statusCode == 200) {
-      print(await response.stream.bytesToString());
-    }
-    else {
-    print(response.reasonPhrase);
-    }
+  }
+  Future<http.StreamedResponse> verifyNumber(String mob)async{
+    var headers = {
+      'Content-Type': 'application/json'
+    };
+    var request = http.Request('POST', Uri.parse(EndPoints.baseUrl+EndPoints().sendOtp));
+    request.body = json.encode({
+      "mobile": mob
+    });
+    request.headers.addAll(headers);
+    http.StreamedResponse response = await request.send();
+    return response;
+  }
+  Future<http.StreamedResponse> getDoctorProfileInfo()async{
+    var headers = {
+      'Authorization': 'Bearer ${EndPoints.accessToken}'
+    };
+    var request = http.Request('GET', Uri.parse('${EndPoints.baseUrl}get-doctor-profile'));
+    request.headers.addAll(headers);
+    http.StreamedResponse response = await request.send();
 
+    return response;
   }
 }

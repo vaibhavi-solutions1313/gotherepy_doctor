@@ -10,6 +10,8 @@ import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/intro_screen/bindings/intro_screen_binding.dart';
 import '../modules/intro_screen/views/intro_screen_view.dart';
+import '../modules/live_video_call_page/bindings/live_video_call_page_binding.dart';
+import '../modules/live_video_call_page/views/live_video_call_page_view.dart';
 import '../modules/patient_page/bindings/patient_page_binding.dart';
 import '../modules/patient_page/views/patient_page_view.dart';
 import '../modules/session_page/bindings/session_page_binding.dart';
@@ -71,6 +73,11 @@ class AppPages {
       name: _Paths.CHAT_PAGE,
       page: () => const ChatPageView(),
       binding: ChatPageBinding(),
+    ),
+    GetPage(
+      name: _Paths.LIVE_VIDEO_CALL_PAGE,
+      page: () => const LiveVideoCallPageView(),
+      binding: LiveVideoCallPageBinding(),
     ),
   ];
 }

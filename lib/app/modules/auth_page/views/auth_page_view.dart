@@ -39,9 +39,9 @@ class AuthPageView extends GetView<AuthPageController> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      ItemContainerWithBottomTitle(bottomTitle: 'Councillor',imagePath: AppImages.authCouncillorImage),
-                      ItemContainerWithBottomTitle(bottomTitle: 'Yoga trainer',imagePath: AppImages.authYogaTrainerImage),
-                      ItemContainerWithBottomTitle(bottomTitle: 'Meditator',imagePath: AppImages.authMeditatorImage),
+                      ItemContainerWithBottomTitle(bottomTitle: authPageController.doctorTypes[0],imagePath: AppImages.authCouncillorImage),
+                      ItemContainerWithBottomTitle(bottomTitle: authPageController.doctorTypes[1],imagePath: AppImages.authYogaTrainerImage),
+                      ItemContainerWithBottomTitle(bottomTitle: authPageController.doctorTypes[2],imagePath: AppImages.authMeditatorImage),
                     ],
                   ),
                   SizedBox(height: 20,),

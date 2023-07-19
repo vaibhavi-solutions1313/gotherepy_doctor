@@ -43,7 +43,11 @@ class ChatPageView extends GetView<ChatPageController> {
                 children: [
                   Row(
                     children: [
-                      Icon(Icons.arrow_back),
+                      InkWell(
+                          onTap:(){
+                            Get.back();
+                          },
+                          child: Icon(Icons.arrow_back)),
                       SizedBox(width: 10),
                       Text16by600(text: 'Help',color: Colors.white),
                     ],

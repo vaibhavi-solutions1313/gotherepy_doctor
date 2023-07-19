@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-
 import '../../auth_page/views/auth_page_view.dart';
 
 class SplashScreenController extends GetxController {
@@ -7,11 +6,9 @@ class SplashScreenController extends GetxController {
   var opacity=false.obs;
 
 void tryAutoLogin(){
-  if(1==1){
     Future.delayed(Duration(seconds: 4),(){
       Get.off(()=>const AuthPageView());
     });
-  }
 }
   @override
   void onInit() {

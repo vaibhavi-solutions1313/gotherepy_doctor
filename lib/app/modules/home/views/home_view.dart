@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:gotherepy_doctor/app/appWidgets/text_styles.dart';
 import 'package:gotherepy_doctor/app/modules/home/views/custom_bottom_navigation_bar_view.dart';
 import 'package:gotherepy_doctor/app/modules/home/views/see_all_session_view.dart';
+import 'package:gotherepy_doctor/app/modules/live_video_call_page/views/live_video_call_page_view.dart';
 import '../../../appWidgets/appButtons.dart';
 import '../../../appWidgets/customAppBar.dart';
 import '../../../app_constants/app_images.dart';
@@ -24,11 +25,11 @@ class HomeView extends GetView<HomeController> {
                 repeat: ImageRepeat.repeat)
         ),
         child: ListView(
-          padding: EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(16.0),
           children: [
             Column(
               children: [
-        BannerCarousel(
+                  BannerCarousel(
         animation: false,
           viewportFraction: 1.0,
           showIndicator: false,
@@ -47,7 +48,7 @@ class HomeView extends GetView<HomeController> {
                   )
                 ],
                 borderRadius: BorderRadius.circular(20),
-                image: DecorationImage(
+                image: const DecorationImage(
                   image: NetworkImage(
                       'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl-2.jpg'),
                   fit: BoxFit.cover,
@@ -62,7 +63,7 @@ class HomeView extends GetView<HomeController> {
                   width: 3,
                 ),
                 borderRadius: BorderRadius.circular(50),
-                image: DecorationImage(
+                image: const DecorationImage(
                   image: NetworkImage(
                       'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl-2.jpg'),
                   fit: BoxFit.cover,
@@ -74,20 +75,20 @@ class HomeView extends GetView<HomeController> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text16by700(text: 'Upcoming Session',),
+                    const Text16by700(text: 'Upcoming Session',),
                     InkWell(
-                        onTap: (){Get.to(()=>SeeAllSessionView());},
-                        child: Text14by500(text: 'See All',color: AppColors.tealColor,))
+                        onTap: (){Get.to(()=>const SeeAllSessionView());},
+                        child: const Text14by500(text: 'See All',color: AppColors.tealColor,))
                   ],
                 ),
                 ListView.builder(
                     shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
+                    physics: const NeverScrollableScrollPhysics(),
                     itemCount: 5,
                     itemBuilder: (context,index){
                       return Container(
-                        margin: EdgeInsets.only(top: 18.0,),
-                        padding: EdgeInsets.all(16.0),
+                        margin: const EdgeInsets.only(top: 18.0,),
+                        padding: const EdgeInsets.all(16.0),
                         decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(16.0),
@@ -111,14 +112,13 @@ class HomeView extends GetView<HomeController> {
                                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text14by500(text: 'Patient For: Food Infection',color: AppColors.bluishColor,),
+                                    const Text14by500(text: 'Patient For: Food Infection',color: AppColors.bluishColor,),
                                     Padding(
                                       padding: const EdgeInsets.symmetric(vertical: 6.0),
                                       child: Row(
                                         children: [
                                           Text14by400(text: 'Patient Name:',fontSize: 12,color: AppColors.lightGreyTextColor,),
                                           Text14by500(text: 'Ritik Sarwal',fontSize: 12,color: AppColors.greyTextColor,)
-
                                         ],
                                       ),
                                     ),
@@ -175,12 +175,14 @@ class HomeView extends GetView<HomeController> {
                                       child: Column(
                                         children: [
                                           Icon(Icons.warning_amber_rounded,size: 56,color: AppColors.greyTextColor,),
-                                          SizedBox(height: 10,),
-                                          Text16by600(text: 'Alert',fontSize: 20,),
-                                          SizedBox(height: 15,),
-                                          FooterTextWithCenterAligned(text: 'You don’t have sufficient balance Minimum balance should for 15 min chat.', fontSize: 16,),
-                                          SizedBox(height: 10,),
-                                          CustomSolidButton(buttonText: 'Top Up', onClick: (){},fontSize: 16,)
+                                          const SizedBox(height: 10,),
+                                          const Text16by600(text: 'Alert',fontSize: 20,),
+                                          const SizedBox(height: 15,),
+                                          const FooterTextWithCenterAligned(text: 'You don’t have sufficient balance Minimum balance should for 15 min chat.', fontSize: 16,),
+                                          const SizedBox(height: 10,),
+                                          CustomSolidButton(buttonText: 'Trial Video Call', onClick: (){
+                                            Get.offAll(()=>const LiveVideoCallPageView());
+                                          },fontSize: 16,)
 
                                         ],
                                       ),
@@ -195,9 +197,9 @@ class HomeView extends GetView<HomeController> {
                                 ),
                                 child: Row(
                                   mainAxisSize: MainAxisSize.min,
-                                  children: [
+                                  children: const [
                                     Padding(
-                                      padding: const EdgeInsets.only(right: 6.0),
+                                      padding: EdgeInsets.only(right: 6.0),
                                       child: Icon(Icons.wifi_calling_3_outlined,size: 24,),
                                     ),
                                     Text('Call',style: TextStyle(color: Colors.white,fontSize: 16,fontWeight: FontWeight.w500),)

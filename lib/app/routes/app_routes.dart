@@ -12,6 +12,7 @@ abstract class Routes {
   static const SETTING_PAGE = _Paths.SETTING_PAGE;
   static const DOCTOR_PROFILE_PAGE = _Paths.DOCTOR_PROFILE_PAGE;
   static const CHAT_PAGE = _Paths.CHAT_PAGE;
+  static const LIVE_VIDEO_CALL_PAGE = _Paths.LIVE_VIDEO_CALL_PAGE;
 }
 
 abstract class _Paths {
@@ -25,4 +26,5 @@ abstract class _Paths {
   static const SETTING_PAGE = '/setting-page';
   static const DOCTOR_PROFILE_PAGE = '/doctor-profile-page';
   static const CHAT_PAGE = '/chat-page';
+  static const LIVE_VIDEO_CALL_PAGE = '/live-video-call-page';
 }
