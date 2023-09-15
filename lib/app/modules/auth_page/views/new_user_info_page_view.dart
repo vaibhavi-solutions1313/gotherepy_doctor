@@ -78,8 +78,8 @@ class NewUserInfoPageView extends GetView {
               children: [
                 CustomCircularBorderTextFieldWithHintTextAndTitle(title: 'Title', hintText: 'Enter your title',
                   textEditingController: authPageController.userTitleController, readOnly: false,),
-                CustomCircularBorderTextFieldWithHintTextAndTitle(title: 'Name', hintText: 'Full name', textEditingController: authPageController.userTitleController,),
-                CustomCircularBorderTextFieldWithHintTextAndTitle(title: 'Specialization', hintText: 'Type you specialization', textEditingController: authPageController.userTitleController,),
+                CustomCircularBorderTextFieldWithHintTextAndTitle(title: 'Name', hintText: 'Full name', textEditingController: authPageController.userFullNameController,),
+                CustomCircularBorderTextFieldWithHintTextAndTitle(title: 'Specialization', hintText: 'Type you specialization', textEditingController: authPageController.userSpecializationController,),
 
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 0.0,vertical: 10.0),
@@ -121,8 +121,8 @@ class NewUserInfoPageView extends GetView {
                   ),
                 ),
 
-                CustomCircularBorderTextFieldWithHintTextAndTitle(title: 'Education Qualification and proof', hintText: 'Qualification details', textEditingController: authPageController.userTitleController,isTextFieldRequired: true,),
-                CustomCircularBorderTextFieldWithHintTextAndTitle(title: 'About yourself', hintText: 'Registration Details', textEditingController: authPageController.userTitleController),
+                CustomCircularBorderTextFieldWithHintTextAndTitle(title: 'Education Qualification and proof', hintText: 'Qualification details', textEditingController: authPageController.userQualificationDetailsController,isTextFieldRequired: true,),
+                CustomCircularBorderTextFieldWithHintTextAndTitle(title: 'About yourself', hintText: 'Registration Details', textEditingController: authPageController.userPoofId),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: Column(

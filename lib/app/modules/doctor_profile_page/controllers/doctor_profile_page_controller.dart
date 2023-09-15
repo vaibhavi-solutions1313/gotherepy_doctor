@@ -23,7 +23,7 @@ class DoctorProfilePageController extends GetxController {
 
 
   ].obs;
-  final count = 0.obs;
+  RxBool enableTexField = true.obs;
   @override
   void onInit() {
     super.onInit();
@@ -39,5 +39,4 @@ class DoctorProfilePageController extends GetxController {
     super.onClose();
   }
 
-  void increment() => count.value++;
 }

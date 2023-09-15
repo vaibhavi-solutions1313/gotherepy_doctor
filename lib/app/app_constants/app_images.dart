@@ -1,8 +1,10 @@
 
 class AppImages{
-  static String appLogoImage='assets/splash_and_intro_screen_images/splash.png';
+  static String appLogoImage='assets/new_logo.PNG';
+  // static String appLogoImage='assets/splash_and_intro_screen_images/splash.png';
   static String appbarBackgroundPngImage='assets/appbar_background.png';
-  static String appLogoImage1='assets/appLogo_png.png';
+  // static String appLogoImage1='assets/appLogo_png.png';
+  static String appLogoImage1='assets/new_logo.PNG';
   static String introScreenBackgroundImage='assets/splash_and_intro_screen_images/background.png';
   static String introScreen1Image='assets/splash_and_intro_screen_images/OBJECTS.png';
   static String introScreen2Image='assets/splash_and_intro_screen_images/Intersect.png';

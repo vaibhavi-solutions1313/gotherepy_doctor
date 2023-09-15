@@ -6,10 +6,11 @@ import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 import 'app/app_constants/constants_appColors.dart';
-import 'app/app_services/notification_services.dart';
+import 'app/data/doctor_user_info.dart';
 import 'app/routes/app_pages.dart';
 
 final localStorage = GetStorage();
+DoctorProfileInfo doctorInfo= DoctorProfileInfo();
 void main()async {
   WidgetsFlutterBinding.ensureInitialized();
   // await Firebase.initializeApp();

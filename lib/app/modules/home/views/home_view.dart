@@ -1,10 +1,14 @@
 import 'package:banner_carousel/banner_carousel.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:gotherepy_doctor/app/appWidgets/text_styles.dart';
 import 'package:gotherepy_doctor/app/modules/home/views/custom_bottom_navigation_bar_view.dart';
 import 'package:gotherepy_doctor/app/modules/home/views/see_all_session_view.dart';
 import 'package:gotherepy_doctor/app/modules/live_video_call_page/views/live_video_call_page_view.dart';
+import 'package:loader_overlay/loader_overlay.dart';
+import 'package:percent_indicator/circular_percent_indicator.dart';
+import '../../../../main.dart';
 import '../../../appWidgets/appButtons.dart';
 import '../../../appWidgets/customAppBar.dart';
 import '../../../app_constants/app_images.dart';
@@ -17,7 +21,7 @@ class HomeView extends GetView<HomeController> {
   Widget build(BuildContext context) {
     HomeController controller = Get.put(HomeController());
     return Scaffold(
-      appBar: CustomAppBar(title: 'Hello Raghav',appBar: AppBar()),
+      appBar: CustomAppBar(title: 'Hello ${doctorInfo.records?.doctorProfile?.first??'Guest'}',appBar: AppBar()),
       bottomNavigationBar: CustomBottomNavigationBarView(),
       body: Container(
         decoration: BoxDecoration(
@@ -72,6 +76,680 @@ class HomeView extends GetView<HomeController> {
             ),
           ],
         ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const IntrinsicHeight(
+                      child: Row(
+                        children: [
+                          VerticalDivider(
+                            color: AppColors.tealColor,
+                            thickness: 6,
+                          ),
+                          Text('Available Therapist',style: TextStyle(fontSize: 17,fontWeight: FontWeight.w700,),),
+                        ],
+                      ),
+                    ),
+                    CarouselSlider(
+                        items: [
+                          Container(
+                            margin: EdgeInsets.symmetric(horizontal: 6.0, vertical: 8.0),
+                            // padding: EdgeInsets.only(left: 18.0,top: 18.0,right: 18.0),
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(16.0),
+                                boxShadow: [
+                                  BoxShadow(
+                                      offset: Offset(1, 1),
+                                      blurRadius: 2,
+                                      spreadRadius: 3,
+                                      color: AppColors.lightGreyTextColor.withOpacity(0.5)
+                                  )
+                                ]
+                            ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.only(left: 18.0, top: 18.0, right: 18.0),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Row(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Padding(
+                                                padding: const EdgeInsets.only(right: 8.0),
+                                                child: CircularPercentIndicator(
+                                                  radius: 35.0,
+                                                  animation: true,
+                                                  animationDuration: 1200,
+                                                  linearGradient: const LinearGradient(
+                                                    begin: Alignment.topRight,
+                                                    end: Alignment.bottomLeft,
+                                                    colors: [
+                                                      Color(0xFF44C3D4),
+                                                      Color(0xFF44C3D4),
+                                                    ],
+                                                  ),
+                                                  lineWidth: 2.0,
+                                                  percent: 0.6,
+                                                  center: InkWell(
+                                                    onTap: () {
+                                                      // Get.to(() => ChatPageView());
+                                                    },
+                                                    child: CircleAvatar(
+                                                        radius: 30,
+                                                        backgroundColor: Colors.red,
+                                                        child: ClipRRect(
+                                                            borderRadius: BorderRadius.circular(140.0),
+                                                            child: Image.asset(AppImages.marriage))),
+                                                  ),
+                                                  circularStrokeCap: CircularStrokeCap.round,
+                                                  startAngle: 150,
+                                                  backgroundColor: Colors.transparent,
+                                                  footer: Row(
+                                                    mainAxisSize: MainAxisSize.min,
+                                                    children: [
+                                                      Padding(
+                                                        padding: const EdgeInsets.only(right: 6.0),
+                                                        child: Icon(Icons.thumb_up, color: AppColors.greenColor, size: 14,),
+                                                      ),
+                                                      Text('88%', style: TextStyle(color: AppColors.greyTextColor, fontSize: 12, fontWeight: FontWeight.w500),)
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                              Column(
+                                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  Text14by400(text: 'Therapy',fontSize: 16),
+                                                  Padding(
+                                                    padding: const EdgeInsets.symmetric(vertical: 6.0),
+                                                    child: IntrinsicHeight(
+                                                      child:
+                                                      Row(
+                                                        children: [
+                                                          Text16by400(text: 'Dentist', fontSize: 12, color: AppColors.lightGreyTextColor,),
+                                                          VerticalDivider(color: Colors.black, indent: 2.0, endIndent: 2.0),
+                                                          Text16by400(text: 'Dentist', fontSize: 12, color: AppColors.lightGreyTextColor,)
+
+                                                        ],
+                                                      ),
+
+                                                    ),
+                                                  ),
+                                                  Padding(
+                                                    padding: const EdgeInsets.symmetric(vertical: 2.0),
+                                                    child: Text16by400(text: '₹ 30 /mins', fontSize: 12, color: AppColors.lightGreyTextColor,),
+                                                  ),
+                                                  Row(
+                                                    mainAxisAlignment: MainAxisAlignment.start,
+                                                    children: [
+                                                      Container(
+                                                        margin: EdgeInsets.symmetric(vertical: 6.0),
+                                                        padding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 4.0),
+                                                        decoration: ShapeDecoration(shape: StadiumBorder(),
+                                                            color: AppColors.containerColor
+                                                        ),
+                                                        child: Row(
+                                                          children: [
+                                                            Text14by400(text: 'Min 30 min / ', color: AppColors.lightGreyTextColor),
+                                                            Text14by400(text: 'Max 45 min', color: AppColors.lightGreyTextColor),
+                                                          ],
+                                                        ),
+                                                      )
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                      // Here, default theme colors are used for activeBgColor, activeFgColor, inactiveBgColor and inactiveFgColor
+
+                                    ],
+                                  ),
+                                ),
+                                InkWell(
+                                  // onTap: () {
+                                  //   context.loaderOverlay.show();
+                                  //   WalletProvider().fetchWalletBalance().then((value) async {
+                                  //     context.loaderOverlay.hide();
+                                  //     var decodedData = jsonDecode(await value.stream.bytesToString());
+                                  //     if (decodedData['wallet_details'] != null) {
+                                  //       var walletBalance = num.parse(decodedData['wallet_details'][0]['amount'].toString());
+                                  //       if (walletBalance < (30 * 300)) {
+                                  //         Get.defaultDialog(
+                                  //             titlePadding: EdgeInsets.zero,
+                                  //             contentPadding: EdgeInsets.zero,
+                                  //             title: '',
+                                  //             middleText: '',
+                                  //             content: Container(
+                                  //               padding: EdgeInsets.symmetric(horizontal: 18.0),
+                                  //               child: Column(
+                                  //                 children: [
+                                  //                   Icon(
+                                  //                     Icons.warning_amber_rounded, size: 56, color: AppColors.greyTextColor,),
+                                  //                   SizedBox(height: 10,),
+                                  //                   Text16by600(text: 'Alert', fontSize: 20,),
+                                  //                   SizedBox(height: 15,),
+                                  //                   FooterTextWithCenterAligned(
+                                  //                     text: 'You don’t have sufficient balance Minimum balance should for 15 min chat.', fontSize: 16,),
+                                  //                   SizedBox(height: 10,),
+                                  //                   CustomSolidButton(buttonText: 'Top Up Wallet', onClick: () {
+                                  //                     Get.off(() => const WalletPageView());
+                                  //                   }, fontSize: 16,)
+                                  //                 ],
+                                  //               ),
+                                  //             )
+                                  //         );
+                                  //       } else {
+                                  //         Get.to(() => const LiveCounselorView());
+                                  //       }
+                                  //
+                                  //     } else {
+                                  //       Get.defaultDialog(
+                                  //           titlePadding: EdgeInsets.zero,
+                                  //           contentPadding: EdgeInsets.zero,
+                                  //           title: '',
+                                  //           middleText: '',
+                                  //           content: Container(
+                                  //             padding: EdgeInsets.symmetric(horizontal: 18.0),
+                                  //             child: Column(
+                                  //               children: [
+                                  //                 Icon(
+                                  //                   Icons.warning_amber_rounded, size: 56, color: AppColors.greyTextColor,),
+                                  //                 SizedBox(height: 10,),
+                                  //                 Text16by600(text: 'Alert', fontSize: 20,),
+                                  //                 SizedBox(height: 15,),
+                                  //                 const FooterTextWithCenterAligned(
+                                  //                   text: 'You don’t have sufficient balance Minimum balance of Rs${30 * 300} should for 15 min chat.', fontSize: 16,),
+                                  //                 SizedBox(height: 10,),
+                                  //                 CustomSolidButton(buttonText: 'Top Up Wallet', onClick: () {
+                                  //                   Get.off(() => const WalletPageView());
+                                  //                 }, fontSize: 16,)
+                                  //               ],
+                                  //             ),
+                                  //           )
+                                  //       );
+                                  //     }
+                                  //   });
+                                  // },
+                                  child: Container(
+                                    padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
+                                    decoration: const BoxDecoration(
+                                        color: AppColors.tealColor,
+                                        borderRadius: BorderRadius.vertical(bottom: Radius.circular(16.0))
+                                    ),
+                                    child: const Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Padding(
+                                          padding: EdgeInsets.only(right: 6.0),
+                                          child: Icon(Icons.message_rounded, size: 13,),
+                                        ),
+                                        Text('Chat', style: TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.w400),)
+                                      ],
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                          Container(
+                            margin: EdgeInsets.symmetric(horizontal: 6.0, vertical: 8.0),
+                            // padding: EdgeInsets.only(left: 18.0,top: 18.0,right: 18.0),
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(16.0),
+                                boxShadow: [
+                                  BoxShadow(
+                                      offset: Offset(1, 1),
+                                      blurRadius: 2,
+                                      spreadRadius: 3,
+                                      color: AppColors.lightGreyTextColor.withOpacity(0.5)
+                                  )
+                                ]
+                            ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.only(left: 18.0, top: 18.0, right: 18.0),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Row(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Padding(
+                                                padding: const EdgeInsets.only(right: 8.0),
+                                                child: CircularPercentIndicator(
+                                                  radius: 35.0,
+                                                  animation: true,
+                                                  animationDuration: 1200,
+                                                  linearGradient: const LinearGradient(
+                                                    begin: Alignment.topRight,
+                                                    end: Alignment.bottomLeft,
+                                                    colors: [
+                                                      Color(0xFF44C3D4),
+                                                      Color(0xFF44C3D4),
+                                                    ],
+                                                  ),
+                                                  lineWidth: 2.0,
+                                                  percent: 0.6,
+                                                  center: InkWell(
+                                                    onTap: () {
+                                                      // Get.to(() => ChatPageView());
+                                                    },
+                                                    child: CircleAvatar(
+                                                        radius: 30,
+                                                        backgroundColor: Colors.red,
+                                                        child: ClipRRect(
+                                                            borderRadius: BorderRadius.circular(140.0),
+                                                            child: Image.asset(AppImages.marriage))),
+                                                  ),
+                                                  circularStrokeCap: CircularStrokeCap.round,
+                                                  startAngle: 150,
+                                                  backgroundColor: Colors.transparent,
+                                                  footer: Row(
+                                                    mainAxisSize: MainAxisSize.min,
+                                                    children: [
+                                                      Padding(
+                                                        padding: const EdgeInsets.only(right: 6.0),
+                                                        child: Icon(Icons.thumb_up, color: AppColors.greenColor, size: 14,),
+                                                      ),
+                                                      Text('88%', style: TextStyle(color: AppColors.greyTextColor, fontSize: 12, fontWeight: FontWeight.w500),)
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                              Column(
+                                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  Text14by400(text: 'Yoga',fontSize: 16),
+                                                  Padding(
+                                                    padding: const EdgeInsets.symmetric(vertical: 6.0),
+                                                    child: IntrinsicHeight(
+                                                      child:
+                                                      Row(
+                                                        children: [
+                                                          Text16by400(text: 'Dentist', fontSize: 12, color: AppColors.lightGreyTextColor,),
+                                                          VerticalDivider(color: Colors.black, indent: 2.0, endIndent: 2.0),
+                                                          Text16by400(text: 'Dentist', fontSize: 12, color: AppColors.lightGreyTextColor,)
+
+                                                        ],
+                                                      ),
+
+                                                    ),
+                                                  ),
+                                                  Padding(
+                                                    padding: const EdgeInsets.symmetric(vertical: 2.0),
+                                                    child: Text16by400(text: '₹ 30 /mins', fontSize: 12, color: AppColors.lightGreyTextColor,),
+                                                  ),
+                                                  Row(
+                                                    mainAxisAlignment: MainAxisAlignment.start,
+                                                    children: [
+                                                      Container(
+                                                        margin: EdgeInsets.symmetric(vertical: 6.0),
+                                                        padding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 4.0),
+                                                        decoration: ShapeDecoration(shape: StadiumBorder(),
+                                                            color: AppColors.containerColor
+                                                        ),
+                                                        child: Row(
+                                                          children: [
+                                                            Text14by400(text: 'Min 30 min / ', color: AppColors.lightGreyTextColor),
+                                                            Text14by400(text: 'Max 45 min', color: AppColors.lightGreyTextColor),
+                                                          ],
+                                                        ),
+                                                      )
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                      // Here, default theme colors are used for activeBgColor, activeFgColor, inactiveBgColor and inactiveFgColor
+
+                                    ],
+                                  ),
+                                ),
+                                InkWell(
+                                  // onTap: () {
+                                  //   context.loaderOverlay.show();
+                                  //   WalletProvider().fetchWalletBalance().then((value) async {
+                                  //     context.loaderOverlay.hide();
+                                  //     var decodedData = jsonDecode(await value.stream.bytesToString());
+                                  //     if (decodedData['wallet_details'] != null) {
+                                  //       var walletBalance = num.parse(decodedData['wallet_details'][0]['amount'].toString());
+                                  //       if (walletBalance < (30 * 300)) {
+                                  //         Get.defaultDialog(
+                                  //             titlePadding: EdgeInsets.zero,
+                                  //             contentPadding: EdgeInsets.zero,
+                                  //             title: '',
+                                  //             middleText: '',
+                                  //             content: Container(
+                                  //               padding: EdgeInsets.symmetric(horizontal: 18.0),
+                                  //               child: Column(
+                                  //                 children: [
+                                  //                   Icon(
+                                  //                     Icons.warning_amber_rounded, size: 56, color: AppColors.greyTextColor,),
+                                  //                   SizedBox(height: 10,),
+                                  //                   Text16by600(text: 'Alert', fontSize: 20,),
+                                  //                   SizedBox(height: 15,),
+                                  //                   FooterTextWithCenterAligned(
+                                  //                     text: 'You don’t have sufficient balance Minimum balance should for 15 min chat.', fontSize: 16,),
+                                  //                   SizedBox(height: 10,),
+                                  //                   CustomSolidButton(buttonText: 'Top Up Wallet', onClick: () {
+                                  //                     Get.off(() => const WalletPageView());
+                                  //                   }, fontSize: 16,)
+                                  //                 ],
+                                  //               ),
+                                  //             )
+                                  //         );
+                                  //       } else {
+                                  //         Get.to(() => const LiveCounselorView());
+                                  //       }
+                                  //
+                                  //     } else {
+                                  //       Get.defaultDialog(
+                                  //           titlePadding: EdgeInsets.zero,
+                                  //           contentPadding: EdgeInsets.zero,
+                                  //           title: '',
+                                  //           middleText: '',
+                                  //           content: Container(
+                                  //             padding: EdgeInsets.symmetric(horizontal: 18.0),
+                                  //             child: Column(
+                                  //               children: [
+                                  //                 Icon(
+                                  //                   Icons.warning_amber_rounded, size: 56, color: AppColors.greyTextColor,),
+                                  //                 SizedBox(height: 10,),
+                                  //                 Text16by600(text: 'Alert', fontSize: 20,),
+                                  //                 SizedBox(height: 15,),
+                                  //                 const FooterTextWithCenterAligned(
+                                  //                   text: 'You don’t have sufficient balance Minimum balance of Rs${30 * 300} should for 15 min chat.', fontSize: 16,),
+                                  //                 SizedBox(height: 10,),
+                                  //                 CustomSolidButton(buttonText: 'Top Up Wallet', onClick: () {
+                                  //                   Get.off(() => const WalletPageView());
+                                  //                 }, fontSize: 16,)
+                                  //               ],
+                                  //             ),
+                                  //           )
+                                  //       );
+                                  //     }
+                                  //   });
+                                  // },
+                                  child: Container(
+                                    padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
+                                    decoration: const BoxDecoration(
+                                        color: AppColors.tealColor,
+                                        borderRadius: BorderRadius.vertical(bottom: Radius.circular(16.0))
+                                    ),
+                                    child: const Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Padding(
+                                          padding: EdgeInsets.only(right: 6.0),
+                                          child: Icon(Icons.message_rounded, size: 13,),
+                                        ),
+                                        Text('Chat', style: TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.w400),)
+                                      ],
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                          Container(
+                            margin: EdgeInsets.symmetric(horizontal: 6.0, vertical: 8.0),
+                            // padding: EdgeInsets.only(left: 18.0,top: 18.0,right: 18.0),
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(16.0),
+                                boxShadow: [
+                                  BoxShadow(
+                                      offset: Offset(1, 1),
+                                      blurRadius: 2,
+                                      spreadRadius: 3,
+                                      color: AppColors.lightGreyTextColor.withOpacity(0.5)
+                                  )
+                                ]
+                            ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.only(left: 18.0, top: 18.0, right: 18.0),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Row(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Padding(
+                                                padding: const EdgeInsets.only(right: 8.0),
+                                                child: CircularPercentIndicator(
+                                                  radius: 35.0,
+                                                  animation: true,
+                                                  animationDuration: 1200,
+                                                  linearGradient: const LinearGradient(
+                                                    begin: Alignment.topRight,
+                                                    end: Alignment.bottomLeft,
+                                                    colors: [
+                                                      Color(0xFF44C3D4),
+                                                      Color(0xFF44C3D4),
+                                                    ],
+                                                  ),
+                                                  lineWidth: 2.0,
+                                                  percent: 0.6,
+                                                  center: InkWell(
+                                                    onTap: () {
+                                                      // Get.to(() => ChatPageView());
+                                                    },
+                                                    child: CircleAvatar(
+                                                        radius: 30,
+                                                        backgroundColor: Colors.red,
+                                                        child: ClipRRect(
+                                                            borderRadius: BorderRadius.circular(140.0),
+                                                            child: Image.asset(AppImages.marriage))),
+                                                  ),
+                                                  circularStrokeCap: CircularStrokeCap.round,
+                                                  startAngle: 150,
+                                                  backgroundColor: Colors.transparent,
+                                                  footer: Row(
+                                                    mainAxisSize: MainAxisSize.min,
+                                                    children: [
+                                                      Padding(
+                                                        padding: const EdgeInsets.only(right: 6.0),
+                                                        child: Icon(Icons.thumb_up, color: AppColors.greenColor, size: 14,),
+                                                      ),
+                                                      Text('88%', style: TextStyle(color: AppColors.greyTextColor, fontSize: 12, fontWeight: FontWeight.w500),)
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                              Column(
+                                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  Text14by400(text: 'Meditation',fontSize: 16,),
+                                                  Padding(
+                                                    padding: const EdgeInsets.symmetric(vertical: 6.0),
+                                                    child: IntrinsicHeight(
+                                                      child:
+                                                      Row(
+                                                        children: [
+                                                          Text16by400(text: 'Dentist', fontSize: 12, color: AppColors.lightGreyTextColor,),
+                                                          VerticalDivider(color: Colors.black, indent: 2.0, endIndent: 2.0),
+                                                          Text16by400(text: 'Dentist', fontSize: 12, color: AppColors.lightGreyTextColor,)
+
+                                                        ],
+                                                      ),
+
+                                                    ),
+                                                  ),
+                                                  Padding(
+                                                    padding: const EdgeInsets.symmetric(vertical: 2.0),
+                                                    child: Text16by400(text: '₹ 30 /mins', fontSize: 12, color: AppColors.lightGreyTextColor,),
+                                                  ),
+                                                  Row(
+                                                    mainAxisAlignment: MainAxisAlignment.start,
+                                                    children: [
+                                                      Container(
+                                                        margin: EdgeInsets.symmetric(vertical: 6.0),
+                                                        padding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 4.0),
+                                                        decoration: ShapeDecoration(shape: StadiumBorder(),
+                                                            color: AppColors.containerColor
+                                                        ),
+                                                        child: Row(
+                                                          children: [
+                                                            Text14by400(text: 'Min 30 min / ', color: AppColors.lightGreyTextColor),
+                                                            Text14by400(text: 'Max 45 min', color: AppColors.lightGreyTextColor),
+                                                          ],
+                                                        ),
+                                                      )
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                      // Here, default theme colors are used for activeBgColor, activeFgColor, inactiveBgColor and inactiveFgColor
+
+                                    ],
+                                  ),
+                                ),
+                                InkWell(
+                                  // onTap: () {
+                                  //   context.loaderOverlay.show();
+                                  //   WalletProvider().fetchWalletBalance().then((value) async {
+                                  //     context.loaderOverlay.hide();
+                                  //     var decodedData = jsonDecode(await value.stream.bytesToString());
+                                  //     if (decodedData['wallet_details'] != null) {
+                                  //       var walletBalance = num.parse(decodedData['wallet_details'][0]['amount'].toString());
+                                  //       if (walletBalance < (30 * 300)) {
+                                  //         Get.defaultDialog(
+                                  //             titlePadding: EdgeInsets.zero,
+                                  //             contentPadding: EdgeInsets.zero,
+                                  //             title: '',
+                                  //             middleText: '',
+                                  //             content: Container(
+                                  //               padding: EdgeInsets.symmetric(horizontal: 18.0),
+                                  //               child: Column(
+                                  //                 children: [
+                                  //                   Icon(
+                                  //                     Icons.warning_amber_rounded, size: 56, color: AppColors.greyTextColor,),
+                                  //                   SizedBox(height: 10,),
+                                  //                   Text16by600(text: 'Alert', fontSize: 20,),
+                                  //                   SizedBox(height: 15,),
+                                  //                   FooterTextWithCenterAligned(
+                                  //                     text: 'You don’t have sufficient balance Minimum balance should for 15 min chat.', fontSize: 16,),
+                                  //                   SizedBox(height: 10,),
+                                  //                   CustomSolidButton(buttonText: 'Top Up Wallet', onClick: () {
+                                  //                     Get.off(() => const WalletPageView());
+                                  //                   }, fontSize: 16,)
+                                  //                 ],
+                                  //               ),
+                                  //             )
+                                  //         );
+                                  //       } else {
+                                  //         Get.to(() => const LiveCounselorView());
+                                  //       }
+                                  //
+                                  //     } else {
+                                  //       Get.defaultDialog(
+                                  //           titlePadding: EdgeInsets.zero,
+                                  //           contentPadding: EdgeInsets.zero,
+                                  //           title: '',
+                                  //           middleText: '',
+                                  //           content: Container(
+                                  //             padding: EdgeInsets.symmetric(horizontal: 18.0),
+                                  //             child: Column(
+                                  //               children: [
+                                  //                 Icon(
+                                  //                   Icons.warning_amber_rounded, size: 56, color: AppColors.greyTextColor,),
+                                  //                 SizedBox(height: 10,),
+                                  //                 Text16by600(text: 'Alert', fontSize: 20,),
+                                  //                 SizedBox(height: 15,),
+                                  //                 const FooterTextWithCenterAligned(
+                                  //                   text: 'You don’t have sufficient balance Minimum balance of Rs${30 * 300} should for 15 min chat.', fontSize: 16,),
+                                  //                 SizedBox(height: 10,),
+                                  //                 CustomSolidButton(buttonText: 'Top Up Wallet', onClick: () {
+                                  //                   Get.off(() => const WalletPageView());
+                                  //                 }, fontSize: 16,)
+                                  //               ],
+                                  //             ),
+                                  //           )
+                                  //       );
+                                  //     }
+                                  //   });
+                                  // },
+                                  child: Container(
+                                    padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
+                                    decoration: const BoxDecoration(
+                                        color: AppColors.tealColor,
+                                        borderRadius: BorderRadius.vertical(bottom: Radius.circular(16.0))
+                                    ),
+                                    child: const Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Padding(
+                                          padding: EdgeInsets.only(right: 6.0),
+                                          child: Icon(Icons.message_rounded, size: 13,),
+                                        ),
+                                        Text('Chat', style: TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.w400),)
+                                      ],
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        ],
+                        options: CarouselOptions(
+                          // height: 200,
+                          // aspectRatio: Get.pixelRatio,
+                          viewportFraction:1.0,
+                          initialPage: 0,
+                          enableInfiniteScroll: true,
+                          reverse: false,
+                          autoPlay: true,
+                          autoPlayInterval: Duration(seconds: 3),
+                          autoPlayAnimationDuration: Duration(milliseconds: 800),
+                          autoPlayCurve: Curves.fastOutSlowIn,
+                          // enlargeCenterPage: true,
+                          // enlargeFactor: 0.3,
+                          onPageChanged: (index, reason) {},
+                          scrollDirection: Axis.horizontal,
+                        )),
+                  ],
+                ),
+
+
+
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [

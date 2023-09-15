@@ -8,4 +8,5 @@ class LocalStorage{
 
   ///Local Storage Key
   static String getDoctorProfileInfo='getDoctorProfileInfo';
+  static String getAccessTokenKey='getAccessTokenKey';
 }

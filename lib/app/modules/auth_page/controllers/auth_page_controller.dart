@@ -6,6 +6,9 @@ import 'package:get/get.dart';
 import 'package:gotherepy_doctor/app/modules/auth_page/views/sign_in_view.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:loader_overlay/loader_overlay.dart';
+import '../../../../main.dart';
+import '../../../app_constants/constants_end_points.dart';
+import '../../../app_services/local_storage.dart';
 import '../../home/views/home_view.dart';
 import '../providers/auth_provider_provider.dart';
 import '../views/verification_page_view.dart';
@@ -25,19 +28,34 @@ class AuthPageController extends GetxController {
 
   ///Sign In
   final signInFormKey=GlobalKey<FormState>();
-  final signUpFormKey=GlobalKey<FormState>();
   final newUserRegisterFormKey=GlobalKey<FormState>();
   TextEditingController emailController=TextEditingController();
   TextEditingController phoneController=TextEditingController();
   TextEditingController passwordController=TextEditingController();
+
   signInUser(BuildContext context, {required String email, required String password,}){
     context.loaderOverlay.show();
     authProvider.loginUser(email: email.trim(), password: password.trim(), deviceToken: '',).then((loginResponse)async{
       context.loaderOverlay.hide();
       var decodedLoginResponseData=jsonDecode(await loginResponse.stream.bytesToString());
       if(decodedLoginResponseData['status']==true) {
-        authProvider.getDoctorProfileInfo().then((value) {
-          // localStorage.write(LocalStorage.getDoctorProfileInfo,)
+        if (kDebugMode) {
+          print('==========================decodedLoginResponseData==================================');
+          print(decodedLoginResponseData.toString());
+        }
+        await localStorage.write(LocalStorage.getAccessTokenKey,decodedLoginResponseData['token']);
+        EndPoints.accessToken=localStorage.read(LocalStorage.getAccessTokenKey)??'';
+
+        authProvider.getDoctorProfileInfo().then((value)async {
+          var doctorInfoResponseData=jsonDecode(await value.stream.bytesToString());
+
+          await localStorage.write(LocalStorage.getDoctorProfileInfo,doctorInfoResponseData);
+
+          if (kDebugMode) {
+            print('============================================================');
+            print(doctorInfoResponseData.toString());
+            print(localStorage.read(LocalStorage.getDoctorProfileInfo).toString());
+          }
           Get.offAll(() => const HomeView());
         });
 
@@ -50,6 +68,7 @@ class AuthPageController extends GetxController {
   }
 
   ///Sign Up
+  final signUpFormKey=GlobalKey<FormState>();
   TextEditingController usernameController=TextEditingController();
   TextEditingController signUpEmailController=TextEditingController();
   TextEditingController signUpPhoneController=TextEditingController();
@@ -68,10 +87,14 @@ class AuthPageController extends GetxController {
     context.loaderOverlay.hide();
     var decodedResponseData=jsonDecode(await signUpResponseValue.stream.bytesToString());
     print(decodedResponseData.toString());
+    print(decodedResponseData['status'].runtimeType.toString());
     if(decodedResponseData['status']==true) {
+      phoneController.text=phone.trim();
+      print('=====================================================');
       authProvider.verifyNumber(signUpPhoneController.text.trim()).then((otpResponse)async {
         var decodedData=jsonDecode(await otpResponse.stream.bytesToString());
         if(decodedData['status']==true) {
+          print(decodedData.toString());
           countDown();
           Get.to(() => const VerificationPageView(newUser: true));
           }
@@ -101,12 +124,11 @@ class AuthPageController extends GetxController {
   }
   Future <int> countDown()async{
     canResendOtp.value=false;
-    for(timer.value=0;timer.value<=30;timer.value++){
-      print(timer.value);
+    for(timer.value=30;timer.value>=0;timer.value--){
       await Future.delayed(Duration(seconds: 1),(){
       });
     }
-    if(timer.value>=29){
+    if(timer.value<=1){
       canResendOtp.value=true;
     }
     return timer.value;
