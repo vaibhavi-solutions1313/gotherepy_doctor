@@ -12,7 +12,8 @@ import '../controllers/auth_page_controller.dart';
 
 
 class SignUpView extends GetView {
-  const SignUpView({Key? key}) : super(key: key);
+  final String doctorTypeId;
+  const SignUpView( {Key? key,required this.doctorTypeId,}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     AuthPageController authPageController=Get.find<AuthPageController>();
@@ -75,7 +76,7 @@ class SignUpView extends GetView {
                                         email: authPageController.signUpEmailController.text.trim(),
                                         phone: authPageController.signUpPhoneController.text.trim(),
                                         cnfPassword: authPageController.confirmPasswordController.text.trim(),
-                                        doctorType: '',
+                                        doctorTypeId: doctorTypeId,
                                         password: authPageController.signUpPasswordController.text.trim(),);
 
                                     }else {

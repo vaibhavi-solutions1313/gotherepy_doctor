@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:gotherepy_doctor/app/modules/auth_page/bindings/auth_page_binding.dart';
+import 'package:gotherepy_doctor/app/modules/auth_page/views/auth_page_view.dart';
+import '../../main.dart';
 import '../app_constants/app_images.dart';
 import '../app_constants/constants_appColors.dart';
 
@@ -50,74 +53,76 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
         PopupMenuButton<int>(
           onSelected: (item){
-            // if(item==6){Get.to(()=>AboutUsPageView());}
+            if(item==0){
+              localStorage.erase();
+              Get.to(()=>AuthPageView(),binding: AuthPageBinding());}
             // if(item==5){Get.to(()=>PlanAndPricingView());}
           },
           itemBuilder: (context) => [
             PopupMenuItem<int>(value: 0, child: Row(
               children: [
-                Image.asset(AppImages.moodTrackerIn,color: Colors.black,height: 22,width: 22,),
+                Image.asset(AppImages.logOut,color: Colors.black,height: 22,width: 22,),
                 Padding(
                   padding: const EdgeInsets.only(left: 8.0),
-                  child: Text('Mood Trackers'),
+                  child: Text('Log out'),
                 ),
               ],
             ),),
-            PopupMenuItem<int>(value: 1, child: Row(
-              children: [
-                Image.asset(AppImages.wellness,color:AppColors.bluishColor ,height: 22,width: 22,),
-                Padding(
-                  padding: const EdgeInsets.only(left: 8.0),
-                  child: Text('Wallness'),
-                ),
-              ],
-            ),),
-            PopupMenuItem<int>(value: 2, child: Row(
-              children: [
-                Image.asset(AppImages.bookYogaSession,color:AppColors.bluishColor ,height: 22,width: 22,),
-                Padding(
-                  padding: const EdgeInsets.only(left: 8.0),
-                  child: Text('Book a Yoga Session'),
-                ),
-              ],
-            ),),
-            PopupMenuItem<int>(value: 3, child: Row(
-              children: [
-                Image.asset(AppImages.dailyJournal,color: AppColors.bluishColor,height: 22,width: 22,),
-                Padding(
-                  padding: const EdgeInsets.only(left: 8.0),
-                  child: Text('Daily Journal'),
-                ),
-              ],
-            ),),
-            PopupMenuItem<int>(value: 4, child: Row(
-              children: [
-                Image.asset(AppImages.wallet,color: AppColors.bluishColor,height: 22,width: 22,),
-                // Image.asset(AppImages.wallet,color: Colors.black,height: 22,width: 22,),
-                Padding(
-                  padding: const EdgeInsets.only(left: 8.0),
-                  child: Text('Live Meditation'),
-                ),
-              ],
-            ),),
-            PopupMenuItem<int>(value: 5, child: Row(
-              children: [
-                Image.asset(AppImages.wallet,color: AppColors.bluishColor,height: 22,width: 22,),
-                Padding(
-                  padding: const EdgeInsets.only(left: 8.0),
-                  child: Text('Mental Health Stuff'),
-                ),
-              ],
-            ),),
-            PopupMenuItem<int>(value: 6, child: Row(
-              children: [
-                Image.asset(AppImages.wallet,color: AppColors.bluishColor,height: 22,width: 22,),
-                Padding(
-                  padding: const EdgeInsets.only(left: 8.0),
-                  child: Text('About Us'),
-                ),
-              ],
-            ),),
+            // PopupMenuItem<int>(value: 1, child: Row(
+            //   children: [
+            //     Image.asset(AppImages.wellness,color:AppColors.bluishColor ,height: 22,width: 22,),
+            //     Padding(
+            //       padding: const EdgeInsets.only(left: 8.0),
+            //       child: Text('Wallness'),
+            //     ),
+            //   ],
+            // ),),
+            // PopupMenuItem<int>(value: 2, child: Row(
+            //   children: [
+            //     Image.asset(AppImages.bookYogaSession,color:AppColors.bluishColor ,height: 22,width: 22,),
+            //     Padding(
+            //       padding: const EdgeInsets.only(left: 8.0),
+            //       child: Text('Book a Yoga Session'),
+            //     ),
+            //   ],
+            // ),),
+            // PopupMenuItem<int>(value: 3, child: Row(
+            //   children: [
+            //     Image.asset(AppImages.dailyJournal,color: AppColors.bluishColor,height: 22,width: 22,),
+            //     Padding(
+            //       padding: const EdgeInsets.only(left: 8.0),
+            //       child: Text('Daily Journal'),
+            //     ),
+            //   ],
+            // ),),
+            // PopupMenuItem<int>(value: 4, child: Row(
+            //   children: [
+            //     Image.asset(AppImages.wallet,color: AppColors.bluishColor,height: 22,width: 22,),
+            //     // Image.asset(AppImages.wallet,color: Colors.black,height: 22,width: 22,),
+            //     Padding(
+            //       padding: const EdgeInsets.only(left: 8.0),
+            //       child: Text('Live Meditation'),
+            //     ),
+            //   ],
+            // ),),
+            // PopupMenuItem<int>(value: 5, child: Row(
+            //   children: [
+            //     Image.asset(AppImages.wallet,color: AppColors.bluishColor,height: 22,width: 22,),
+            //     Padding(
+            //       padding: const EdgeInsets.only(left: 8.0),
+            //       child: Text('Mental Health Stuff'),
+            //     ),
+            //   ],
+            // ),),
+            // PopupMenuItem<int>(value: 6, child: Row(
+            //   children: [
+            //     Image.asset(AppImages.wallet,color: AppColors.bluishColor,height: 22,width: 22,),
+            //     Padding(
+            //       padding: const EdgeInsets.only(left: 8.0),
+            //       child: Text('About Us'),
+            //     ),
+            //   ],
+            // ),),
           ],
         ),
       ],

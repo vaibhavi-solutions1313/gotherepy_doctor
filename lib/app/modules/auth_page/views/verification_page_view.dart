@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:gotherepy_doctor/app/modules/auth_page/views/new_user_info_page_view.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
@@ -12,7 +15,8 @@ import '../controllers/auth_page_controller.dart';
 
 class VerificationPageView extends GetView {
   final bool newUser;
-  const VerificationPageView({this.newUser=false, Key? key}) : super(key: key);
+  final String? newUserToken;
+  const VerificationPageView( {this.newUser=false,this.newUserToken, Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     AuthPageController authPageController=Get.find<AuthPageController>();
@@ -64,7 +68,7 @@ class VerificationPageView extends GetView {
                         Text16by400(text: 'Enter Your Mobile No',color: AppColors.greyTextColor,),
                       ],
                     ),
-                    PhoneTextField(title: 'text', phoneController: authPageController.phoneController, hint: 'klkj',),
+                    PhoneTextField(title: 'text', phoneController: authPageController.phoneController, hint: 'phone',),
                     Obx(() => CustomSolidButton(buttonText: authPageController.canResendOtp.value?'Send OTP':'Resend otp in ${authPageController.timer.value} sec',
                         boxColor: authPageController.canResendOtp.value?AppColors.tealColor:AppColors.greyColor676464.withOpacity(0.5),
                         onClick: (){
@@ -83,7 +87,7 @@ class VerificationPageView extends GetView {
                     PinCodeTextField(
                       mainAxisAlignment: MainAxisAlignment.start,
                       keyboardType: TextInputType.phone,
-                      // controller: authPageController.otpNumber,
+                      controller: authPageController.otpNumber,
                       length: 4,
                       textStyle: TextStyle(color: Color(0xff00AC4F),),
                       obscureText: false,
@@ -142,7 +146,15 @@ class VerificationPageView extends GetView {
 
                     CustomSolidButton(buttonText: newUser?'Submit':'Update', onClick: (){
                       if(newUser){
-                        Get.to(() => const NewUserInfoPageView());
+                        authPageController.authProvider.verifyOtp(mobile: authPageController.phoneController.text, otp:authPageController.otpNumber.text).then((value)async{
+                          var decodedData=jsonDecode(await value.stream.bytesToString());
+                          if(decodedData['status']==true){
+                            Get.to(() =>  NewUserInfoPageView(newUserToken: newUserToken!,));
+                          }else{
+                            Fluttertoast.showToast(msg: decodedData['message']);
+                          }
+                        });
+
                       }
                       else if(authPageController.setNewPassword.text==authPageController.confirmNewPassword.text){
                         authPageController.setPassword(authPageController.setNewPassword.text);

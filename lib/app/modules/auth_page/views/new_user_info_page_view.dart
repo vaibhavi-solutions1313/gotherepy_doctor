@@ -1,21 +1,21 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:gotherepy_doctor/app/appWidgets/appButtons.dart';
 import 'package:gotherepy_doctor/app/appWidgets/appTextField.dart';
 import 'package:gotherepy_doctor/app/modules/auth_page/controllers/auth_page_controller.dart';
-import 'package:gotherepy_doctor/app/modules/home/views/home_view.dart';
 import '../../../appWidgets/text_styles.dart';
 import '../../../appWidgets/universalAppBar.dart';
 import '../../../app_constants/constants_appColors.dart';
 
 class NewUserInfoPageView extends GetView {
-  const NewUserInfoPageView({Key? key}) : super(key: key);
+  final String newUserToken;
+  const NewUserInfoPageView({Key? key,required this.newUserToken,}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     AuthPageController authPageController=Get.find<AuthPageController>();
-    print(authPageController.selectedUserImage.value);
+
     return Scaffold(
       appBar: CustomUniversalAppBar(title: 'Create Your Profile',appBar: AppBar()),
       body: ListView(
@@ -80,7 +80,6 @@ class NewUserInfoPageView extends GetView {
                   textEditingController: authPageController.userTitleController, readOnly: false,),
                 CustomCircularBorderTextFieldWithHintTextAndTitle(title: 'Name', hintText: 'Full name', textEditingController: authPageController.userFullNameController,),
                 CustomCircularBorderTextFieldWithHintTextAndTitle(title: 'Specialization', hintText: 'Type you specialization', textEditingController: authPageController.userSpecializationController,),
-
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 0.0,vertical: 10.0),
                   child: Column(
@@ -120,9 +119,64 @@ class NewUserInfoPageView extends GetView {
                     ],
                   ),
                 ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Text14by400(
+                            text: 'Education Qualification and proof',
+                            color: AppColors.blackish2D2D2D,
+                          ),
+                          Align(
+                              alignment: Alignment.topCenter,
+                              child: Icon(Icons.star,size: 10,color: Colors.red,))
+                        ],
+                      ),
+                      SizedBox(height: 6.0,),
+                      InkWell(
+                        onTap: () {
+                          authPageController.selectImageFromGallery();
+                        },
+                        child: Obx(() =>  Material(
+                          elevation: 2.0,
+                          color: Colors.white,
+                          shadowColor: AppColors.whiteShadow,
+                          borderRadius: BorderRadius.circular(10.0),
+                          child: TextFormField(
+                            onTap: ()=>authPageController.selectImageForEducationFromGallery(),
+                            readOnly:true,
+                            autofocus: false,
+                            controller: authPageController.userQualificationDetailsController,
+                            validator: (val) {
+                              if (val!.isEmpty) {
+                                return 'This field is required';
+                              }else{
+                                return null;
+                              }
+                            },
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w400,
+                              color: AppColors.blackishTextColor,
+                            ),
+                            cursorColor: AppColors.blackishTextColor,
+                            decoration: InputDecoration(
+                              contentPadding: EdgeInsets.symmetric(horizontal: 12.0),
+                              border: InputBorder.none,
+                              hintText: authPageController.selectedIdentityProof.value.isEmpty?'document to be uploaded':authPageController.selectedIdentityProof.value,
+                            ),
 
-                CustomCircularBorderTextFieldWithHintTextAndTitle(title: 'Education Qualification and proof', hintText: 'Qualification details', textEditingController: authPageController.userQualificationDetailsController,isTextFieldRequired: true,),
-                CustomCircularBorderTextFieldWithHintTextAndTitle(title: 'About yourself', hintText: 'Registration Details', textEditingController: authPageController.userPoofId),
+                          ),
+                        )),
+                      ),
+                    ],
+                  ),
+                ),
+
+                CustomCircularBorderTextFieldWithHintTextAndTitle(title: 'About yourself', hintText: 'Registration Details', textEditingController: authPageController.aboutTextController),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: Column(
@@ -153,10 +207,12 @@ class NewUserInfoPageView extends GetView {
                              onTap: ()=>authPageController.selectImageFromGallery(),
                             readOnly:true,
                             autofocus: false,
-                            controller: authPageController.userTitleController,
+                            controller: authPageController.idProofImagePathController,
                             validator: (val) {
                               if (val!.isEmpty) {
                                 return 'This field is required';
+                              }else{
+                                return null;
                               }
                             },
                             style: TextStyle(
@@ -178,35 +234,25 @@ class NewUserInfoPageView extends GetView {
                   ),
                 ),
                 CustomSolidButton(buttonText: 'Update', onClick: (){
-                  if(authPageController.newUserRegisterFormKey.currentState!.validate()){}
-                  Get.defaultDialog(
+                  if(authPageController.selectedUserImage.value.isNotEmpty){
 
-                      titlePadding: EdgeInsets.zero,
-                      contentPadding: EdgeInsets.zero,
-                      title:'',
-                      middleText: '',
-                      content: Container(
-                        padding: EdgeInsets.symmetric(horizontal: 18.0),
-                        child: Column(
-                          children: [
-                            Icon(Icons.warning_amber_rounded,size: 56,color: AppColors.greyTextColor,),
-                            SizedBox(height: 10,),
-                            Text16by600(text: 'Thank you for sing up',fontSize: 20,color: AppColors.greyColor676464,),
-                            SizedBox(height: 15,),
-                            FooterTextWithCenterAligned(text: 'Thank for submitting your details with Gotherapy, once your request approval with admin we will get back to you', fontSize: 16,),
-                            SizedBox(height: 10,),
-                            CustomSolidButton(buttonText: 'Join Session', onClick: (){
-                              Get.offAll(()=>const HomeView());
-                            },fontSize: 16,),
-                            TextButton(onPressed: (){}, child: Text('Skip',style: TextStyle(
-                              color: AppColors.tealColor,
-
-                            ),))
-
-                          ],
-                        ),
-                      )
-                  );
+                    if(authPageController.newUserRegisterFormKey.currentState!.validate()){
+                      authPageController.saveNewUserInfo(
+                          newUserToken: newUserToken,
+                          avatar: authPageController.selectedUserImage.value,
+                          title: authPageController.userTitleController.text,
+                          name: authPageController.userFullNameController.text,
+                          specialization: authPageController.userSpecializationController.text,
+                          gender: authPageController.userGenderValue.value==0?'m':'f',
+                          education_proof: authPageController.userQualificationDetailsController.text,
+                          about: authPageController.aboutTextController.text,
+                          id_proof: authPageController.idProofImagePathController.text,
+                          counselling: [authPageController.doctorTypeId.value]
+                      );
+                    }
+                  }else{
+                    Fluttertoast.showToast(msg: 'Add your profile image');
+                  }
 
                 }),
               ],

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:gotherepy_doctor/main.dart';
 
 class DoctorProfilePageController extends GetxController {
   //TODO: Implement DoctorProfilePageController
@@ -7,17 +8,17 @@ class DoctorProfilePageController extends GetxController {
   var doctorDetail=[
     {
       'title':'Name',
-      'value':'Username',
+      'value':doctorInfo.records!.name!??'Doctor name here',
       'icon':Icons.edit,
     },
     {
       'title':'About',
-      'value':'Hey, my name is Geeta Bhalla, I am a certified Weight Loss Dietitian. I’ve been practicing from my clinic in South Delhi (M Block Market, Greater Kailash Part 1) from 2003 till present. I have generated a huge clientele over time mainly through my positive word of mouth.',
+      'value':doctorInfo.records!.about??'.....',
       'icon':Icons.edit,
     },
     {
       'title':'Specialization',
-      'value':'Anxiety, Depression, Stress, Relationship Issue, Suicidal Ideation, Grief & Loss, OCD.',
+      'value':doctorInfo.records!.degree,
       'icon':Icons.edit,
     },
 

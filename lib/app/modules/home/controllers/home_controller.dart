@@ -1,17 +1,23 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:gotherepy_doctor/app/modules/doctor_profile_page/views/doctor_profile_page_view.dart';
-import 'package:gotherepy_doctor/app/modules/home/views/home_view.dart';
-import 'package:gotherepy_doctor/app/modules/setting_page/views/setting_page_view.dart';
+import 'package:gotherepy_doctor/app/modules/home/providers/home_provider.dart';
+import '../../../../main.dart';
+import '../model/user_appointment_model.dart';
 
-import '../../chat_page/views/chat_page_view.dart';
 
 class HomeController extends GetxController {
   //TODO: Implement HomeController
+HomeProvider homeProvider=HomeProvider();
+PageController pageController=PageController();
+Rx<UsersAppointmentsModel> usersAppointmentsModel=UsersAppointmentsModel().obs;
 
-  final count = 0.obs;
+
   @override
   void onInit() {
     super.onInit();
+    if(doctorInfo.records!=null && doctorInfo.records!=null && doctorInfo.records!.doctorId!=null) {
+      getAppointmentById(doctorId: doctorInfo.records!.doctorId!.toString());
+    }
   }
 
   @override
@@ -28,18 +34,23 @@ class HomeController extends GetxController {
   var currentIndex=0.obs;
   jumpToPage(int index){
     currentIndex.value=index;
-    if(currentIndex.value==0)
-    {
-      Get.to(() => HomeView());
-    }else if(currentIndex.value==1)
-    {
-      // Get.to(() => ChatPageView());
-    } else if(currentIndex.value==2) {
-      Get.to(() => SettingPageView());
-    }else if(currentIndex.value==3) {
-      Get.to(() => ChatPageView());
-    }else {
-      Get.to(() => DoctorProfilePageView());
-    }
+    // if(currentIndex.value==0)
+    // {
+    //   Get.to(() => HomeView());
+    // }else if(currentIndex.value==1)
+    // {
+    //   // Get.to(() => ChatPageView());
+    // } else if(currentIndex.value==2) {
+    //   Get.to(() => SettingPageView());
+    // }else if(currentIndex.value==3) {
+    //   Get.to(() => ChatPageView());
+    // }else {
+    //   Get.to(() => DoctorProfilePageView());
+    // }
+  }
+  getAppointmentById({required String doctorId}){
+    homeProvider.fetchAppointmentById(doctorId: doctorId).then((appointmentsResponseValue) {
+      usersAppointmentsModel.value=appointmentsResponseValue;
+    });
   }
 }

@@ -89,7 +89,7 @@ class SignInView extends GetView {
                             buttonText: 'Sign In',
                             onClick: () {
                               if (authPageController.signInFormKey.currentState!.validate()) {
-                                authPageController.signInUser(context, email:authPageController.emailController.text, password:authPageController.passwordController.text);
+                                authPageController.signInUser(context, email:authPageController.emailController.text, password:authPageController.passwordController.text, deviceToken: '');
                               }
                             }),
                         SizedBox(
@@ -130,7 +130,7 @@ class SignInView extends GetView {
                                   TextSpan(
                                     recognizer: TapGestureRecognizer()
                                       ..onTap = () {
-                                        Get.to(() => SignUpView());
+                                        Get.to(() => const AuthPageView());
                                       },
                                     text: 'Register ',
                                     style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: AppColors.tealColor),

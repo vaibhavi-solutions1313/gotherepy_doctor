@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:gotherepy_doctor/main.dart';
 import '../../../appWidgets/appButtons.dart';
 import '../../../appWidgets/text_styles.dart';
 import '../../../appWidgets/universalAppBar.dart';
-import '../../../app_constants/app_images.dart';
 import '../../../app_constants/constants_appColors.dart';
 import '../controllers/doctor_profile_page_controller.dart';
 
@@ -24,12 +24,12 @@ class DoctorProfilePageView extends GetView<DoctorProfilePageController> {
           children: [
             Column(
               children: [
-                CircleAvatar(
+                doctorInfo.records!.avatar != null ? CircleAvatar(
                   radius: 60,
-                  backgroundImage: AssetImage(AppImages.marriage),
+                  backgroundImage: NetworkImage(doctorInfo.records!.avatar??''),
                   // child: Image.asset(AppImages.marriage)
-                ),
-                SizedBox(
+                ): Icon(Icons.person,color: Colors.grey,size: 85,),
+                const SizedBox(
                   height: 15,
                 ),
                 ListView.separated(
@@ -92,14 +92,14 @@ class DoctorProfilePageView extends GetView<DoctorProfilePageController> {
                     );
                   },
                   separatorBuilder: (BuildContext context, int index) {
-                    return SizedBox(
+                    return const SizedBox(
                       height: 15,
                     );
                   },
                 ),
               ],
             ),
-            CustomSolidButton(buttonText: 'Book Now', onClick: () {})
+            CustomSolidButton(buttonText: 'Update', onClick: () {})
           ],
         ),
       ),

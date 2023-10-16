@@ -12,7 +12,9 @@ class CustomBottomNavigationBarView extends GetView {
     return Obx(() =>  BottomNavigationBar(
       currentIndex: controller.currentIndex.value,
       onTap: (val){
-        controller.jumpToPage(val);
+        controller.currentIndex.value=val;
+        controller.pageController.jumpToPage(controller.currentIndex.value);
+        // controller.pageController.page=val;
       },
       selectedItemColor:AppColors.bluishColor,
       unselectedItemColor: AppColors.greyTextColor,

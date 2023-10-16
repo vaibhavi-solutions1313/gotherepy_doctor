@@ -28,7 +28,9 @@ class AuthPageView extends GetView<AuthPageController> {
             Image.asset(AppImages.appLogoImage1,height:Get.height/4,fit: BoxFit.fitHeight,),
             Image.asset(AppImages.yogaImage,height:Get.height/4,fit: BoxFit.fitHeight),
             SizedBox(height: 20,),
-            Padding(
+
+            Obx(() => authPageController.doctorTypes.isNotEmpty
+                ? Padding(
               padding: const EdgeInsets.all(18.0),
               child: Column(
                 mainAxisSize: MainAxisSize.max,
@@ -38,29 +40,31 @@ class AuthPageView extends GetView<AuthPageController> {
                   SizedBox(height: 15,),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      ItemContainerWithBottomTitle(bottomTitle: authPageController.doctorTypes[0],imagePath: AppImages.authCouncillorImage),
-                      ItemContainerWithBottomTitle(bottomTitle: authPageController.doctorTypes[1],imagePath: AppImages.authYogaTrainerImage),
-                      ItemContainerWithBottomTitle(bottomTitle: authPageController.doctorTypes[2],imagePath: AppImages.authMeditatorImage),
-                    ],
+                    children: List.generate(authPageController.doctorTypes.length, (index) => ItemContainerWithBottomTitle(bottomTitle: authPageController.doctorTypes[index]['name'],imagePath: authPageController.doctorTypes[index]['avatar'], doctorTypeId: authPageController.doctorTypes[index]['id'].toString(),)),
                   ),
-                  SizedBox(height: 20,),
-                  BorderButton(buttonText: 'Already Have an Account Sign In', onClick: () {Get.to(()=>const SignInView());},),
                 ],
               ),
+            )
+                : Row()
             ),
+            Padding(
+              padding: const EdgeInsets.all(18.0),
+              child: BorderButton(buttonText: 'Already Have an Account Sign In', onClick: () {Get.to(()=>const SignInView());},),
+            ),
+            SizedBox(height: 20,),
           ],
         ),
       ),
     );
   }
 }
-
+///////////////////////////////////////////////////////////////////////////////////////////////////
 class ItemContainerWithBottomTitle extends StatefulWidget {
   final String imagePath;
   final String bottomTitle;
+  final String doctorTypeId;
   const ItemContainerWithBottomTitle({
-    super.key, required this.imagePath, required this.bottomTitle,
+    super.key, required this.imagePath, required this.bottomTitle, required this.doctorTypeId,
   });
 
   @override
@@ -76,10 +80,11 @@ class _ItemContainerWithBottomTitleState extends State<ItemContainerWithBottomTi
         Obx(()=> InkWell(
           borderRadius: BorderRadius.circular(10.0),
           onTap:()async{
+            Get.find<AuthPageController>().doctorTypeId.value=widget.doctorTypeId;
             isPressed.value=!isPressed.value;
             await Future.delayed(Duration(milliseconds: 60),(){
               isPressed.value=true;
-              Get.to(()=>SignUpView());
+              Get.to(()=>SignUpView(doctorTypeId: widget.doctorTypeId,));
             });
 
           },
@@ -106,7 +111,7 @@ class _ItemContainerWithBottomTitleState extends State<ItemContainerWithBottomTi
                   )
                 ]
             ),
-            child: Image.asset(widget.imagePath),
+            child: Image.network(widget.imagePath),
           ),
         )),
          Padding(
@@ -120,7 +125,7 @@ class _ItemContainerWithBottomTitleState extends State<ItemContainerWithBottomTi
     );
   }
 }
-
+////////////////////////////////////////////////////////////////////////////////////////////////
 class LoginWith extends StatelessWidget {
   const LoginWith({Key? key}) : super(key: key);
 
