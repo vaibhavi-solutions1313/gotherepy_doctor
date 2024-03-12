@@ -1,7 +1,9 @@
 import 'dart:convert';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart'as http;
 import '../../../app_constants/constants_end_points.dart';
+import '../model/appointment_requests.dart';
 import '../model/chat_list_model.dart';
 import '../model/conversation.dart';
 
@@ -10,13 +12,14 @@ class ChatListProvider extends GetConnect {
   void onInit() {
     httpClient.baseUrl = 'YOUR-API-URL';
   }
+
   Future<ChatListModel> fetchChatList({required String userId})async{
 
  var headers = {
    'Content-Type': 'application/json',
    'Authorization': 'Bearer ${EndPoints.accessToken}'
  };
- var request = http.Request('GET', Uri.parse('http://gotherapy.care/backend/public/api/doctor/get-chat-appointment-list'));
+ var request = http.Request('GET', Uri.parse('http://gotherapy.care/public/api/doctor/get-chat-appointment-list'));
  request.body = json.encode({
    "doctor_id": userId
  });
@@ -39,12 +42,61 @@ class ChatListProvider extends GetConnect {
    return chatListModel;
  }
   }
+    Future<AppointmentRequests> fetchAppointMentRequest({required String doctorId, required String bookingType, required String status})async{
+      var headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ${EndPoints.accessToken}'
+      };
 
+      var request = http.Request('GET', Uri.parse('http://gotherapy.care/public/api/doctor/get-appointment-list'));
+      request.body = json.encode({
+        "doctor_id": doctorId,
+        "type": bookingType,
+        "status": status
+      });
+      request.headers.addAll(headers);
+
+      http.StreamedResponse response = await request.send();
+
+      if (response.statusCode == 200) {
+        // var data=jsonDecode(await response.stream.bytesToString());
+        return AppointmentRequests.fromJson(jsonDecode(await response.stream.bytesToString()));
+      }
+      else {
+        print(response.reasonPhrase);
+        return AppointmentRequests();
+      }
+
+    }
+    Future requestAppointment({required String bookingId,required String bookingType })async{
+      var headers = {
+        'Authorization': 'Bearer ${EndPoints.accessToken}'
+      };
+      var request = http.MultipartRequest('POST', Uri.parse('http://gotherapy.care/public/api/doctor/approve-booking'));
+      request.fields.addAll({
+        'appointment_id': bookingId,
+        'booking_type': bookingType
+      });
+
+      request.headers.addAll(headers);
+
+      http.StreamedResponse response = await request.send();
+
+      if (response.statusCode == 200) {
+        print(await response.stream.bytesToString());
+        Fluttertoast.showToast(msg: 'Appointment approved.');
+      }
+      else {
+        print(response.reasonPhrase);
+        Fluttertoast.showToast(msg: 'Something went wrong');
+      }
+
+    }
   Future<Rx<Conversation>> fetchConversation({required String userId, required String doctorId})async{
     var headers = {
       'Authorization': 'Bearer ${EndPoints.accessToken}',
     };
-    var request = http.MultipartRequest('POST', Uri.parse('http://gotherapy.care/backend/public/api/user/get-messages'));
+    var request = http.MultipartRequest('POST', Uri.parse('http://gotherapy.care/public/api/user/get-messages'));
     request.fields.addAll({
       'user_id': userId,
       'doctor_id': doctorId
@@ -70,7 +122,7 @@ class ChatListProvider extends GetConnect {
     var headers = {
       'Authorization': 'Bearer ${EndPoints.accessToken}',
     };
-    var request = http.MultipartRequest('POST', Uri.parse('http://gotherapy.care/backend/public/api/user/send-message'));
+    var request = http.MultipartRequest('POST', Uri.parse('http://gotherapy.care/public/api/user/send-message'));
     request.fields.addAll({
       'user_id': userId,
       'doctor_id': doctorId,

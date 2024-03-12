@@ -79,7 +79,7 @@ class NewUserInfoPageView extends GetView {
                 CustomCircularBorderTextFieldWithHintTextAndTitle(title: 'Title', hintText: 'Enter your title',
                   textEditingController: authPageController.userTitleController, readOnly: false,),
                 CustomCircularBorderTextFieldWithHintTextAndTitle(title: 'Name', hintText: 'Full name', textEditingController: authPageController.userFullNameController,),
-                CustomCircularBorderTextFieldWithHintTextAndTitle(title: 'Specialization', hintText: 'Type you specialization', textEditingController: authPageController.userSpecializationController,),
+                CustomCircularBorderTextFieldWithHintTextAndTitle(title: 'Specialization', hintText: 'Type your specialization', textEditingController: authPageController.userSpecializationController,),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 0.0,vertical: 10.0),
                   child: Column(
@@ -108,7 +108,6 @@ class NewUserInfoPageView extends GetView {
                           child: Obx(() =>  Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-
                               RadioMenuButton(style: ButtonStyle(),value: 0, groupValue: authPageController.userGenderValue.value, onChanged: (val){authPageController.userGenderValue.value=val!;}, child: Text('male')),
                               VerticalDivider(),
                               RadioMenuButton(value: 1, groupValue: authPageController.userGenderValue.value, onChanged: (val){authPageController.userGenderValue.value=val!;}, child: Text('female')),
@@ -166,7 +165,7 @@ class NewUserInfoPageView extends GetView {
                             decoration: InputDecoration(
                               contentPadding: EdgeInsets.symmetric(horizontal: 12.0),
                               border: InputBorder.none,
-                              hintText: authPageController.selectedIdentityProof.value.isEmpty?'document to be uploaded':authPageController.selectedIdentityProof.value,
+                              hintText: authPageController.selectedIdentityProof.value.isEmpty?'Document to be uploaded':authPageController.selectedIdentityProof.value,
                             ),
 
                           ),

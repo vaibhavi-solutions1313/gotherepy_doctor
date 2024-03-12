@@ -79,7 +79,7 @@ class SignInView extends GetView {
                           title: 'Password',
                           textEditingController: authPageController.passwordController,
                           hintText: 'Password',
-                          inputType: TextInputType.phone,
+                          inputType: TextInputType.text,
                           isObscureText: true,
                         ),
                         SizedBox(

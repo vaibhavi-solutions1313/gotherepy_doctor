@@ -1,3 +1,8 @@
+import 'dart:convert';
+
+UsersAppointmentsModel userBookedAppointmentModelFromJson(String str) => UsersAppointmentsModel.fromJson(json.decode(str));
+
+String userBookedAppointmentModelToJson(UsersAppointmentsModel data) => json.encode(data.toJson());
 class UsersAppointmentsModel {
   bool? status;
   String? msg;
@@ -40,6 +45,8 @@ class Results {
   Null? cancelledById;
   String? status;
   Null? reason;
+  int? doctorCharges;
+  String? bookingType;
   String? createdAt;
   String? updatedAt;
   String? patientName;
@@ -57,6 +64,8 @@ class Results {
         this.cancelledById,
         this.status,
         this.reason,
+        this.doctorCharges,
+        this.bookingType,
         this.createdAt,
         this.updatedAt,
         this.patientName});
@@ -74,6 +83,8 @@ class Results {
     cancelledById = json['cancelled_by_id'];
     status = json['status'];
     reason = json['reason'];
+    doctorCharges = json['doctor_charges'];
+    bookingType = json['booking_type'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
     patientName = json['patient_name'];
@@ -93,6 +104,8 @@ class Results {
     data['cancelled_by_id'] = this.cancelledById;
     data['status'] = this.status;
     data['reason'] = this.reason;
+    data['doctor_charges'] = this.doctorCharges;
+    data['booking_type'] = this.bookingType;
     data['created_at'] = this.createdAt;
     data['updated_at'] = this.updatedAt;
     data['patient_name'] = this.patientName;

@@ -11,8 +11,10 @@ abstract class Routes {
   static const PATIENT_PAGE = _Paths.PATIENT_PAGE;
   static const SETTING_PAGE = _Paths.SETTING_PAGE;
   static const DOCTOR_PROFILE_PAGE = _Paths.DOCTOR_PROFILE_PAGE;
+  static const EDIT_PROFILE_PAGE = _Paths.EDIT_PROFILE_PAGE;
   static const CHAT_PAGE = _Paths.CHAT_PAGE;
   static const LIVE_VIDEO_CALL_PAGE = _Paths.LIVE_VIDEO_CALL_PAGE;
+  static const WALLET_PAGE = _Paths.WALLET_PAGE;
 }
 
 abstract class _Paths {
@@ -25,6 +27,8 @@ abstract class _Paths {
   static const PATIENT_PAGE = '/patient-page';
   static const SETTING_PAGE = '/setting-page';
   static const DOCTOR_PROFILE_PAGE = '/doctor-profile-page';
+  static const EDIT_PROFILE_PAGE = '/doctor-profile-page';
   static const CHAT_PAGE = '/chat-page';
   static const LIVE_VIDEO_CALL_PAGE = '/live-video-call-page';
+  static const WALLET_PAGE = '/wallet-page';
 }

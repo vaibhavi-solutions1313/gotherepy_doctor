@@ -6,6 +6,7 @@ class AppColors {
   static const Color bluishColor=Color(0xff154786);
   static const Color bluishTextColor=Color(0xff2D4379);
   static const Color tealColor=Color(0xff10AAB4);
+  static const Color lightTealColor=Color(0x8014b6b9);
   static const Color whiteShadow=Color(0xffEEEEEE);
 
   ///Container
@@ -29,4 +30,6 @@ class AppColors {
   static const Color blackishTextColor=Color(0xff0D253C);
   static const Color blackish5E5E5E=Color(0xff5E5E5E);
   static const Color blackish2D2D2D=Color(0xff2D2D2D);
+  static const Color redishCC0909=Color(0xffcc0909);
+  static const Color redishD44041=Color(0xffd44041);
 }

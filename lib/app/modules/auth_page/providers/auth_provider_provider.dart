@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:gotherepy_doctor/app/modules/auth_page/bindings/auth_page_binding.dart';
@@ -12,6 +13,7 @@ import '../../../appWidgets/appButtons.dart';
 import '../../../appWidgets/text_styles.dart';
 import '../../../app_constants/constants_appColors.dart';
 import '../../../app_constants/constants_end_points.dart';
+import '../../doctor_profile_page/model/add_session_price.dart';
 import '../../home/views/home_view.dart';
 class AuthProviderProvider extends GetConnect {
   @override
@@ -19,7 +21,7 @@ class AuthProviderProvider extends GetConnect {
     httpClient.baseUrl = 'YOUR-API-URL';
   }
   Future<String> fetchDoctorTypes() async {
-    var request = http.Request('GET', Uri.parse('http://gotherapy.care/backend/public/api/doctor/doctor-type'));
+    var request = http.Request('GET', Uri.parse('http://gotherapy.care/public/api/doctor/doctor-type'));
     http.StreamedResponse response = await request.send();
     return await response.stream.bytesToString();
   }
@@ -73,7 +75,7 @@ class AuthProviderProvider extends GetConnect {
     var headers = {
       'Content-Type': 'application/json'
     };
-    var request = http.Request('POST', Uri.parse('http://gotherapy.care/backend/public/api/doctor/verify-otp'));
+    var request = http.Request('POST', Uri.parse('http://gotherapy.care/public/api/doctor/verify-otp'));
     request.body = json.encode({
       "mobile": mobile,
       "otp": otp
@@ -94,14 +96,16 @@ class AuthProviderProvider extends GetConnect {
     var headers = {
       'Authorization': 'Bearer $newUserToken'
     };
-    var request = http.MultipartRequest('POST', Uri.parse('http://gotherapy.care/backend/public/api/doctor/update-profile'));
+    var request = http.MultipartRequest('POST', Uri.parse('http://gotherapy.care/public/api/doctor/update-profile'));
     request.fields.addAll({
       'name': name,
       'title': title,
       'gender': gender,
       'counselling[]': counselling.join(','),
       'specialization': specialization,
-      'about': about
+      'about': about,
+      // 'session_price': '$session_price',
+      // 'chat_price': '$chat_price'
     });
     request.files.add(await http.MultipartFile.fromPath('avatar',avatar));
     request.files.add(await http.MultipartFile.fromPath('education_proof', education_proof));
@@ -143,6 +147,75 @@ class AuthProviderProvider extends GetConnect {
     }
     else {
       print(response.reasonPhrase);
+    }
+
+  }
+
+  Future<AddSessionPriceModel> addReqistrationSessionPrice({
+    required String sessionPrice,
+    required String sessionCount,
+    required String discountPercentage,
+    required String sessionTime}) async {
+    if (kDebugMode) {
+      print(
+        "Request Data: $sessionPrice, $sessionCount, $sessionTime, $discountPercentage");
+    }
+    final request = http.MultipartRequest(
+        'POST', Uri.parse('http://gotherapy.care/public/api/doctor/add-session-prices'));
+    var headers = {
+      'Content-Type': 'multipart/form-data',
+      'Authorization': 'Bearer ${EndPoints.accessToken}'
+    };
+    print('Access Token: ${EndPoints.accessToken}');
+    request.headers.addAll(headers);
+    print('Request Headers: $headers');
+
+    request.fields.addAll({
+      'session_price': sessionPrice,
+      'session_count': sessionCount,
+      'session_time': sessionTime,
+      'discount_percentage': discountPercentage,
+    });
+    http.StreamedResponse response = await request.send();
+    String responseBody = await response.stream.bytesToString();
+    if (response.statusCode == 200) {
+      print('Json decode successful');
+      return addSessionPriceModelFromJson(responseBody);
+    } else {
+      throw Exception('Failed to add session price: $responseBody');
+    }
+  }
+
+  /// chat price
+  Future<AddSessionPriceModel> addRegistrationChatPrice({
+    required String sessionPrice,
+    required String sessionCount,
+    required String discountPercentage,
+    required String sessionTime}) async {
+    print("Request Data: $sessionPrice, $sessionCount, $sessionTime, $discountPercentage");
+    final request = http.MultipartRequest(
+        'POST', Uri.parse('http://gotherapy.care/public/api/doctor/add-chat-prices'));
+    var headers = {
+      'Content-Type': 'multipart/form-data',
+      'Authorization': 'Bearer ${EndPoints.accessToken}'
+    };
+    request.headers.addAll(headers);
+
+    request.fields.addAll({
+      'session_price': sessionPrice,
+      'session_count': '0',
+      'session_time': sessionTime,
+      'discount_percentage': discountPercentage,
+    });
+    http.StreamedResponse response = await request.send();
+    String responseBody = await response.stream.bytesToString();
+    print(responseBody);
+    return addSessionPriceModelFromJson(responseBody);
+    if (response.statusCode == 200) {
+      print('Json decode successful');
+      return addSessionPriceModelFromJson(responseBody);
+    } else {
+      throw Exception('Failed to add chat price: ${response.reasonPhrase}');
     }
 
   }

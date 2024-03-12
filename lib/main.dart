@@ -1,9 +1,9 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:gotherepy_doctor/app/modules/doctor_profile_page/controllers/set_availability_controller.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 import 'app/app_constants/constants_appColors.dart';
 import 'app/data/doctor_user_info.dart';

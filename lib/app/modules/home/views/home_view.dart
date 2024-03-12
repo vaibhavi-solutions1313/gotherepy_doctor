@@ -2,6 +2,7 @@ import 'package:banner_carousel/banner_carousel.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:gotherepy_doctor/app/appWidgets/text_styles.dart';
+import 'package:gotherepy_doctor/app/modules/history_page/views/history_view.dart';
 import 'package:gotherepy_doctor/app/modules/home/views/custom_bottom_navigation_bar_view.dart';
 import 'package:gotherepy_doctor/app/modules/home/views/see_all_session_view.dart';
 import 'package:gotherepy_doctor/app/modules/live_video_call_page/views/live_video_call_page_view.dart';
@@ -33,7 +34,8 @@ class HomeView extends GetView<HomeController> {
           scrollDirection: Axis.horizontal,
           children: [
             Scaffold(
-              appBar: CustomAppBar(title: 'Hello ${doctorInfo.records?.name ?? 'Guest'}', appBar: AppBar()),
+              appBar: CustomAppBar(title: 'Hello ${doctorInfo.records?.name ?? 'Guest'}',
+                  appBar: AppBar()),
               body: Container(
                 decoration: BoxDecoration(image: DecorationImage(image: AssetImage(AppImages.backgroundPngImage), repeat: ImageRepeat.repeat)),
                 child: ListView(
@@ -778,7 +780,7 @@ class HomeView extends GetView<HomeController> {
                         ),
                         InkWell(
                             onTap: () {
-                              Get.to(() => const SeeAllSessionView());
+                              Get.to(() => SeeAllSessionView());
                             },
                             child: const Text14by500(
                               text: 'See All',
@@ -787,12 +789,14 @@ class HomeView extends GetView<HomeController> {
                       ],
                     ),
 
-                    Obx(() => controller.usersAppointmentsModel.value.results!=null && controller.usersAppointmentsModel.value.results!.isNotEmpty
-                        ?ListView.builder(
+                    Obx(() => controller.usersAppointmentsModel.value.results!=null &&
+                        controller.usersAppointmentsModel.value.results!.isNotEmpty
+                        ? ListView.builder(
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
                         itemCount: controller.usersAppointmentsModel.value.results!.length,
                         itemBuilder: (context, index) {
+                          controller.getAppointmentById(doctorId: doctorInfo.records!.doctorId.toString());
                           return Container(
                             margin: const EdgeInsets.only(
                               top: 18.0,
@@ -844,7 +848,7 @@ class HomeView extends GetView<HomeController> {
                                                 color: AppColors.lightGreyTextColor,
                                               ),
                                               Text14by500(
-                                                text: '1st',
+                                                text: controller.usersAppointmentsModel.value.results![index].id.toString(),
                                                 fontSize: 12,
                                                 color: AppColors.greyTextColor,
                                               )
@@ -866,7 +870,7 @@ class HomeView extends GetView<HomeController> {
                                                   ),
                                                 ),
                                                 Text(
-                                                DateFormat('d MMM y').format((DateTime.parse(controller.usersAppointmentsModel.value.results![index].bookingDate!))),
+                                                  DateFormat('d MMM y').format((DateTime.parse(controller.usersAppointmentsModel.value.results![index].bookingDate!))),
                                                   // DateTime.parse(controller.usersAppointmentsModel.value.results![index].bookingDate!).toString(),
                                                   style: TextStyle(color: AppColors.greyTextColor, fontSize: 12, fontWeight: FontWeight.w500),
                                                 ),
@@ -977,7 +981,8 @@ class HomeView extends GetView<HomeController> {
               ),
             ),
             SessionPageView(),
-            SeeAllSessionView(),
+            HistoryListView(),
+            // SeeAllSessionView(),
             ChatListView(),
             DoctorProfilePageView()
           ],

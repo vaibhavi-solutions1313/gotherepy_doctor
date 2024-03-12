@@ -20,15 +20,21 @@ dependencies:
   fluttertoast:
   agora_rtc_engine: ^6.2.0
   permission_handler: 10.2.0
+  salomon_bottom_bar: ^3.3.2
 #  firebase_core:
 #  firebase_auth:
 #  firebase_messaging:
 #  flutter_local_notifications:
   carousel_slider: 4.1.1
   percent_indicator:
+  flutter_date_pickers: ^0.4.2
+  flutter_time_picker_spinner: ^2.0.0
 
   flutter: 
     sdk: flutter
+  dio: ^5.4.0
+  internet_connection_checker: ^1.0.0+1
+  font_awesome_flutter: ^10.7.0
 
 dev_dependencies:
   flutter_launcher_icons: ^0.13.1

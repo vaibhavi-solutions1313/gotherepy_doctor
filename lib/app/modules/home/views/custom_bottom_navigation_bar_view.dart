@@ -19,10 +19,10 @@ class CustomBottomNavigationBarView extends GetView {
       selectedItemColor:AppColors.bluishColor,
       unselectedItemColor: AppColors.greyTextColor,
       type: BottomNavigationBarType.shifting,
-      items: [
+      items: const [
         BottomNavigationBarItem(icon: Icon(Icons.home),label: 'home'),
         BottomNavigationBarItem(icon: Icon(Icons.add_ic_call_rounded),label: 'Call'),
-        BottomNavigationBarItem(icon: Icon(Icons.location_searching_outlined),label: 'Explore'),
+        BottomNavigationBarItem(icon: Icon(Icons.history_outlined),label: 'History'),
         BottomNavigationBarItem(icon: Icon(Icons.mark_unread_chat_alt_outlined),label: 'Chat'),
         BottomNavigationBarItem(icon: Icon(Icons.person_outline_outlined),label: 'Account'),
       ],

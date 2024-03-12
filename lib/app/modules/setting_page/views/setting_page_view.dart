@@ -11,7 +11,7 @@ class SettingPageView extends GetView<SettingPageController> {
   Widget build(BuildContext context) {
     SettingPageController settingController=Get.put(SettingPageController());
     return Scaffold(
-      appBar: CustomUniversalAppBar(title: 'Setting', appBar: AppBar(),),
+      appBar: CustomUniversalAppBar(title: 'Settings', appBar: AppBar(),),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

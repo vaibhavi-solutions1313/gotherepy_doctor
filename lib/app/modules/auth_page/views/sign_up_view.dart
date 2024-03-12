@@ -51,45 +51,49 @@ class SignUpView extends GetView {
                 color: Colors.white,
                 borderRadius: BorderRadius.only(topRight: Radius.circular(25),topLeft: Radius.circular(25))
               ),
-              child: ListView(
+              child: SingleChildScrollView(
                       padding: EdgeInsets.symmetric(vertical: 25.0,horizontal: 18),
                       // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Form(
-                          key: authPageController.signUpFormKey,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text16by400(text: 'Enter your details',fontSize: 24),
-                              SizedBox(height: 15,),
-                              CustomTextFieldWithTitle(title: 'Username', textEditingController: authPageController.usernameController, hintText: 'Username',),
-                              CustomTextFieldWithTitle(title: 'Email address', textEditingController: authPageController.signUpEmailController, hintText: 'Email address',),
-                              CustomTextFieldWithTitle(title: 'Mobile number', textEditingController: authPageController.signUpPhoneController, hintText: 'Mobile number',inputType: TextInputType.number,),
-                              CustomPasswordTextField(title: 'Password', textEditingController: authPageController.signUpPasswordController, hintText: 'Password', inputType: TextInputType.phone, isObscureText: true,),
-                              CustomPasswordTextField(title: 'Confirm Password', textEditingController: authPageController.confirmPasswordController, hintText: 'Password', inputType: TextInputType.phone, isObscureText: true,),
-                              SizedBox(height: 25,),
-                              CustomSolidButton(buttonText: 'Sign up', onClick: (){
-                                if(GetUtils.isEmail(authPageController.signUpEmailController.text)){
+                      child: Column(
+                        children: [
+                          Form(
+                            key: authPageController.signUpFormKey,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text16by400(text: 'Enter your details',fontSize: 24),
+                                SizedBox(height: 15,),
+                                CustomTextFieldWithTitle(title: 'Username', textEditingController: authPageController.usernameController, hintText: 'Username',),
+                                CustomTextFieldWithTitle(title: 'Email address', textEditingController: authPageController.signUpEmailController, hintText: 'Email address',),
+                                CustomTextFieldWithTitle(title: 'Mobile number', textEditingController: authPageController.signUpPhoneController, hintText: 'Mobile number',inputType: TextInputType.number,),
+                                CustomPasswordTextField(title: 'Password', textEditingController: authPageController.signUpPasswordController, hintText: 'Password', inputType: TextInputType.text, isObscureText: true,),
+                                CustomPasswordTextField(title: 'Confirm Password', textEditingController: authPageController.confirmPasswordController, hintText: 'Password', inputType: TextInputType.text, isObscureText: true,),
+                                SizedBox(height: 25,),
+                                CustomSolidButton(buttonText: 'Sign up', onClick: (){
                                   if(authPageController.signUpFormKey.currentState!.validate()){
-                                    if(authPageController.signUpPasswordController.text==authPageController.confirmPasswordController.text){
-                                      authPageController.signUpNewUser(context,
-                                        email: authPageController.signUpEmailController.text.trim(),
-                                        phone: authPageController.signUpPhoneController.text.trim(),
-                                        cnfPassword: authPageController.confirmPasswordController.text.trim(),
-                                        doctorTypeId: doctorTypeId,
-                                        password: authPageController.signUpPasswordController.text.trim(),);
+                                  if(GetUtils.isEmail(authPageController.signUpEmailController.text)){
+                                      if(authPageController.signUpPasswordController.text==authPageController.confirmPasswordController.text){
+                                        authPageController.signUpNewUser(context,
+                                          username: authPageController.usernameController.text.trim(),
+                                          email: authPageController.signUpEmailController.text.trim(),
+                                          phone: authPageController.signUpPhoneController.text.trim(),
+                                          cnfPassword: authPageController.confirmPasswordController.text.trim(),
+                                          doctorTypeId: doctorTypeId,
+                                          password: authPageController.signUpPasswordController.text.trim(),);
 
-                                    }else {
-                                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Password mismatched')));
+                                      }else {
+                                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Password mismatched')));
+                                      }
                                     }
                                   }
-                                }
-                                else {
-                                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Enter Valid Email')));
-                                }
-                              }),
-                            ],
-                          ),),],
+                                  else {
+                                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Enter Valid Email')));
+                                  }
+                                }),
+                              ],
+                            ),),
+                        ]
+                      )
             ),
           ))
 

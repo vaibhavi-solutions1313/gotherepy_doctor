@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:gotherepy_doctor/app/modules/auth_page/bindings/auth_page_binding.dart';
 import 'package:gotherepy_doctor/app/modules/auth_page/views/auth_page_view.dart';
+import 'package:gotherepy_doctor/app/modules/doctor_profile_page/views/doctor_profile_page_view.dart';
+import 'package:gotherepy_doctor/app/modules/doctor_profile_page/views/edit_profile_view.dart';
 import '../../main.dart';
 import '../app_constants/app_images.dart';
 import '../app_constants/constants_appColors.dart';
+import '../modules/home/views/wallet_page_view.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
@@ -21,8 +24,10 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       // toolbarHeight: 300,
       leading: InkWell(
-          onTap: (){Get.back();},
-          child: Icon(Icons.arrow_back)
+          onTap: (){
+            // Get.back();
+            },
+          child: Icon(Icons.person_pin)
       ),
       // leadingWidth: 30,
       titleSpacing: 0,
@@ -43,7 +48,9 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         ),
       ),
       actions:[
-        InkWell(onTap:(){},
+        InkWell(onTap:(){
+          Get.to(() => WalletPageView());
+        },
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Image.asset(AppImages.wallet,color: Colors.white,height: 22,width: 22,),

@@ -18,8 +18,10 @@ class CustomUniversalAppBar extends StatelessWidget implements PreferredSizeWidg
     return AppBar(
       // toolbarHeight: 300,
       leading: InkWell(
-          onTap: (){Get.back();},
-          child: Icon(Icons.arrow_back)
+          onTap: (){
+            // Get.back();
+            },
+          child: Icon(Icons.arrow_forward_ios_outlined, size: 18,)
       ),
       // leadingWidth: 30,
       titleSpacing: 0,
@@ -27,8 +29,10 @@ class CustomUniversalAppBar extends StatelessWidget implements PreferredSizeWidg
         height: 100,
         padding: EdgeInsets.all(10),
         decoration: BoxDecoration(
-            gradient: LinearGradient(colors: [AppColors.bluishColor, AppColors.bluishColor.withOpacity(0.7)]),
-            image: DecorationImage(image: AssetImage(AppImages.appbarBackgroundPngImage), fit: BoxFit.fitWidth)),
+            gradient: LinearGradient(colors: [AppColors.bluishColor,
+              AppColors.bluishColor.withOpacity(0.7)]),
+            image: DecorationImage(image: AssetImage(AppImages.appbarBackgroundPngImage),
+                fit: BoxFit.fitWidth)),
       ),
       centerTitle: isCenterTitle,
       title: Text(

@@ -15,9 +15,9 @@ class HomeProvider extends GetConnect {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ${EndPoints.accessToken}'
     };
-    var request = http.Request('GET', Uri.parse('http://gotherapy.care/backend/public/api/doctor/get-appointment-list'));
+    var request = http.Request('GET', Uri.parse('http://gotherapy.care/public/api/user/get-booked-appointment-list'));
     request.body = json.encode({
-      "doctor_id": doctorId
+      "doctor_id": doctorId,
     });
     request.headers.addAll(headers);
 

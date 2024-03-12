@@ -1,4 +1,7 @@
 import 'package:get/get.dart';
+import 'package:gotherepy_doctor/app/modules/doctor_profile_page/bindings/edit_profile_page_binding.dart';
+import 'package:gotherepy_doctor/app/modules/doctor_profile_page/views/edit_profile_view.dart';
+import 'package:gotherepy_doctor/app/modules/home/views/wallet_page_view.dart';
 
 import '../modules/auth_page/bindings/auth_page_binding.dart';
 import '../modules/auth_page/views/auth_page_view.dart';
@@ -70,6 +73,11 @@ class AppPages {
       binding: DoctorProfilePageBinding(),
     ),
     GetPage(
+      name: _Paths.EDIT_PROFILE_PAGE,
+      page: () => const EditProfileView(),
+      binding: EditProfilePageBinding(),
+    ),
+    GetPage(
       name: _Paths.CHAT_PAGE,
       page: () => const ChatPageView(),
       binding: ChatPageBinding(),
@@ -78,6 +86,11 @@ class AppPages {
       name: _Paths.LIVE_VIDEO_CALL_PAGE,
       page: () => const LiveVideoCallPageView(),
       binding: LiveVideoCallPageBinding(),
+    ),
+    GetPage(
+      name: _Paths.WALLET_PAGE,
+      page: () => const WalletPageView(),
+      // binding: LiveVideoCallPageBinding(),
     ),
   ];
 }

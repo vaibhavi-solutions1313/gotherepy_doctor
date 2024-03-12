@@ -62,8 +62,9 @@ class CustomSolidButton extends StatelessWidget {
   final double fontSize;
   final FontWeight fontWeight;
   final double vPadding;
+  final double hPadding;
   const CustomSolidButton({Key? key, required this.buttonText, this.boxColor=AppColors.tealColor,  this.textColor=AppColors.scaffoldColor,
-    required this.onClick, this.fontSize=16,  this.vPadding=14,this.fontWeight=FontWeight.w400,}) : super(key: key);
+    required this.onClick, this.fontSize=16,  this.hPadding = 24, this.vPadding=14,this.fontWeight=FontWeight.w400,}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -77,14 +78,15 @@ class CustomSolidButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(8.0),
           onTap: onClick,
           child: Ink(
-            padding: EdgeInsets.symmetric(horizontal: 24,vertical: vPadding),
+            padding: EdgeInsets.symmetric(horizontal: hPadding,vertical: vPadding),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(8.0),
                 color: boxColor
             ),
             child: Center(
               child: Text(buttonText,style: TextStyle(
-                  color:textColor,fontSize: fontSize,fontWeight:fontWeight ),overflow: TextOverflow.ellipsis,),
+                  color:textColor,fontSize: fontSize,fontWeight:fontWeight ),
+                overflow: TextOverflow.ellipsis,),
               // child: Text16by400(text:widget.buttonText,color: widget.textColor,fontSize: widget.fontSize,)
             ),
           ),

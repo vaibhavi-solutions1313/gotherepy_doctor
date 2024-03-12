@@ -3,7 +3,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:gotherepy_doctor/app/modules/auth_page/views/chat_price_view.dart';
+import 'package:gotherepy_doctor/app/modules/auth_page/views/session_price_view.dart';
 import 'package:gotherepy_doctor/app/modules/auth_page/views/sign_in_view.dart';
+import 'package:gotherepy_doctor/app/modules/doctor_profile_page/providers/_provider.dart';
 import 'package:gotherepy_doctor/app/modules/home/bindings/home_binding.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:loader_overlay/loader_overlay.dart';
@@ -90,8 +93,8 @@ class AuthPageController extends GetxController {
   TextEditingController confirmPasswordController = TextEditingController();
 
   signUpNewUser(BuildContext context,
-      {required String email, required String phone, required String password, required String cnfPassword, required String doctorTypeId}) {
-    Map data = {"email": email.trim(), "phone": phone.trim(), "password": password.trim(), "confirm_password": cnfPassword.trim(), "doctor_type": doctorTypeId};
+      {required String username, required String email, required String phone, required String password, required String cnfPassword, required String doctorTypeId}) {
+    Map data = {"username": username.trim(), "email": email.trim(), "phone": phone.trim(), "password": password.trim(), "confirm_password": cnfPassword.trim(), "doctor_type": doctorTypeId};
     context.loaderOverlay.show();
     authProvider.registerUser(data).then((signUpResponseValue) async {
       context.loaderOverlay.hide();
@@ -155,6 +158,44 @@ class AuthPageController extends GetxController {
     }
     return timer.value;
   }
+
+  /// Fetch Session & Chat Prices
+  // for session
+  final sessionPriceKey = GlobalKey<FormState>();
+  TextEditingController sessionCountController = TextEditingController();
+  TextEditingController sessionPriceController = TextEditingController();
+  TextEditingController sessionDiscountController = TextEditingController();
+  TextEditingController sessionTimeController = TextEditingController();
+
+  saveSessionPrice({
+    required String sPrice, required String sCount, required String sDiscount, required String sTime
+}) async{
+    await authProvider.addReqistrationSessionPrice(
+        sessionPrice: sPrice,
+        sessionCount: sCount,
+        discountPercentage: sDiscount,
+        sessionTime: sTime);
+    Get.to(() => ChatPriceView());
+  }
+
+  // for chat
+  final chatPriceKey = GlobalKey<FormState>();
+  TextEditingController chatPriceController = TextEditingController();
+  TextEditingController chatDiscountController = TextEditingController();
+  TextEditingController chatTimeController = TextEditingController();
+  TextEditingController chatCountController = TextEditingController();
+
+  saveChatPrice({
+    required String cPrice, required String cCount, required String cDiscount, required String cTime
+  }) async{
+    await authProvider.addRegistrationChatPrice(
+        sessionPrice: cPrice,
+        sessionCount: cCount,
+        discountPercentage: cDiscount,
+        sessionTime: cTime);
+    Get.to(() => HomeView());
+  }
+
 
   ///User Info Detail
   TextEditingController userTitleController = TextEditingController();
@@ -234,7 +275,11 @@ class AuthPageController extends GetxController {
         specialization: specialization,
         avatar: avatar,
         education_proof: education_proof,
-        id_proof: id_proof);
+        // session_price: session_price,
+        // chat_price: chat_price,
+        id_proof: id_proof
+    );
+    Get.to(() => SessionPriceView());
   }
 
   @override
